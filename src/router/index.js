@@ -11,6 +11,18 @@ import cMatters from "@/components/column/c_matters.vue"
 // 彭海涛
 import clzjh from "@/components/pht/clgl/clzjh.vue"
 import clxqjh from "@/components/pht/clgl/clxqjh.vue"
+//陈思畔
+import khxx from "@/components/csp/khxx.vue"
+import khxxf from "@/components/csp/khxxf.vue"
+import htxx from "@/components/csp/htxx.vue"
+import htxxf from "@/components/csp/htxxf.vue"
+import khfp from "@/components/csp/khfp.vue"
+import khfpf from "@/components/csp/khfpf.vue"
+import khlxr from "@/components/csp/khlxr.vue"
+import khlxrf from "@/components/csp/khlxrf.vue"
+import lxjl from "@/components/csp/lxjl.vue"
+import lxjlf from "@/components/csp/lxjlf.vue"
+import wdkh from "@/components/csp/wdkh.vue"
 
 Vue.use(Router)
 const originalPush = Router.prototype.push
@@ -21,7 +33,6 @@ const router = new Router({
   routes:[{
     name:main,
     path: "/main",
-<<<<<<< HEAD
     component: main,
     redirect: '/cProject',
     children: [{
@@ -37,6 +48,42 @@ const router = new Router({
       }]
     },{
       path: '/cCustomer',
+      component:cCustomer,
+      redirect: '/htxx',
+      children:[{
+        path: '/htxx',
+        component: htxx
+      },{
+        path: '/htxxf',
+        component: htxxf
+      },{
+        path: '/khfp',
+        component: khfp
+      },{
+        path: '/khfpf',
+        component: khfpf
+      },{
+        path: '/khlxr',
+        component: khlxr
+      },{
+        path: '/khlxrf',
+        component: khlxrf
+      },{
+        path: '/khxx',
+        component: khxx
+      },{
+        path: '/khxxf',
+        component: khxxf
+      },{
+        path: '/lxjl',
+        component: lxjl
+      },{
+        path: '/lxjlf',
+        component: lxjlf
+      },{
+        path: '/wdkh',
+        component: wdkh
+      }],
       components: {
         default: cCustomer
       }
@@ -51,12 +98,7 @@ const router = new Router({
         default: cMatters
       }
     }]
-  }]
-=======
-    component: main
-  },
-    ],
+  }],
   mode:'history'//去掉地址中的#号
->>>>>>> a85de72b9fd977522cc9f414cc0c63b1dfbb05d3
 })
 export default router;
