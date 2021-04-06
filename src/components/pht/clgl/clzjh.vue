@@ -18,13 +18,13 @@
   }
 </style>
 <template>
-  <div>
+  <div v-loading="loading">
     <el-form :inline="true" ref="ruleForm" label-width="120px"
-      class="demo-form-inline">
+      class="demo-form-inline" >
       <el-row>
         <el-col :span="24">
           <el-form-item>
-            <el-button type="primary" size="small">添加</el-button>
+            <el-button type="primary" size="small" @click="push()">添加</el-button>
           </el-form-item>
         </el-col>
       </el-row>
@@ -38,27 +38,26 @@
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="计划编号:" prop="添加后自动生成">
+          <el-form-item label="计划编号:">
             <el-input placeholder="添加后自动生成" :disabled="true">
             </el-input>
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="计划主题:" prop="请输入计划主题">
+          <el-form-item label="计划主题:" :required='isRequired'>
             <el-input v-model="plans.planName">
             </el-input>
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="项目名称">
-            <el-select placeholder="请选择所属项目">
-              <el-option label="区域一" value="shanghai"></el-option>
-              <el-option label="区域二" value="beijing"></el-option>
+          <el-form-item label="项目名称" :required='isRequired'>
+            <el-select placeholder="请选择所属项目" v-model="plans.lxxxdjBh">
+              <el-option v-for="item in projects" :key="item.lxxxdjBh" :label="item.lxxxdjXmmc" :value="item.lxxxdjBh"></el-option>
             </el-select>
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="编制人:" prop="请输入编制人">
+          <el-form-item label="编制人:">
             <el-input v-model="plans.planPerson">
             </el-input>
           </el-form-item>
@@ -66,7 +65,7 @@
       </el-row>
       <el-row>
         <el-col :span="24">
-          <el-form-item label="备注:" prop="tbxxJj">
+          <el-form-item label="备注:">
             <el-input type="textarea" placeholder="请输入内容" v-model="plans.planMask" rows="5" maxlength="254"
               style="width: 1000px;" show-word-limit>
             </el-input>
@@ -127,10 +126,11 @@
         tbxxDate:"",
         drawer: false,
         isRequired: true,
-        plans:{planName:"",lxxxdjBh:"",planPerson:"",planMask:""},
+        plans:{planName:"",lxxxdjBh:"",planPerson:"",planMask:"",planType:0,userNumber:sessionStorage.getItem("userId")},
         plansDetailds:{materialName:"",materialNumber:"",materialCompany:"",materialSum:"",materialMask:""},
         tableData: [],
-
+        projects:[],
+        loading:false
       };
     },
     methods: {
@@ -140,7 +140,7 @@
           this.$message({showClose: true, message: '材料名称不能为空',type: 'warning'});
           return;
         }
-        if(this.plansDetailds.materialSum.length==0||this.plansDetailds.materialSum.indexOf(".")!=-1){
+        if(this.plansDetailds.materialSum.length==0||this.plansDetailds.materialSum.indexOf(".")!=-1||this.plansDetailds.materialSum.indexOf("-")!=-1){
           this.$message({showClose: true, message: '总计划量不能为空且必须是>=0的正整数',type: 'warning'});
           return;
         }
@@ -151,10 +151,38 @@
       //删除材料明细
       delPlansDetailds(scope){
         this.tableData.splice(scope.$index,1);
+      },
+      //提交
+      push(){
+        if(this.plans.planName.length==0||this.plans.planName.length>64){
+          this.$message({showClose: true, message: '计划名称不能为空并且必须位数<=64',type: 'warning'});
+          return;
+        }
+        if(this.plans.lxxxdjBh.length==0){
+          this.$message({showClose: true, message: '项目名称不能为空',type: 'warning'});
+          return;
+        }
+        var data={plans:this.plans,detaileds:this.tableData};
+        this.loading=true;
+        this.$axios.post("/material/addMaterial",data).then(res=>{
+          this.loading=false;
+          if(res.data.state==200){
+            this.$message({showClose: true, message: '新增材料总计划成功',type: 'success'});
+            this.plans={planName:"",lxxxdjBh:"",planPerson:"",planMask:"",planType:0,userNumber:sessionStorage.getItem("userId")};
+            this.tableData=[];
+          }
+        });
       }
     },
     created() {
       this.tbxxDate = new Date();
+      this.$axios.get("/lxxx/queryAll").then(res=>{
+        if(res.data.state==200){
+          this.projects=res.data.content;
+        }else{
+          this.$message({showClose: true, message: '项目信息获取失败',type: 'warning'});
+        }
+      });
     }
   }
 </script>
