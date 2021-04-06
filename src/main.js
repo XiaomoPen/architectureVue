@@ -9,7 +9,7 @@ import axios from 'axios'
 import {get, post, del} from '../api/axios'
 
 Vue.use(ElementUI)
-Vue.config.productionTip = false
+// Vue.config.productionTip = false
 axios.defaults.baseURL = "http://localhost:7777"
 
 //导入QS
@@ -29,10 +29,5 @@ new Vue({
   el: '#app',
   router,
   components: { App },
-  data:function(){
-    return{
-      myEvent: new Vue()
-    }
-  },
   template: '<App/>'
 })

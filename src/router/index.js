@@ -11,6 +11,11 @@ import cMatters from "@/components/column/c_matters.vue"
 // 彭海涛
 import clzjh from "@/components/pht/clgl/clzjh.vue"
 import clxqjh from "@/components/pht/clgl/clxqjh.vue"
+import clzjhlb from "@/components/pht/clgl/clzjhlb.vue"
+import clxqjhlb from "@/components/pht/clgl/clxqjhlb.vue"
+import clht from "@/components/pht/clgl/clht.vue"
+import clhtlb from "@/components/pht/clgl/clhtlb.vue"
+import clrk from "@/components/pht/clgl/clrk.vue"
 
 //王涛文
 import tbxx from "@/components/wtw/tbgl/tbxx.vue"
@@ -62,8 +67,23 @@ const router = new Router({
         path: '/clzjh',
         component: clzjh
       },{
+        path: '/clzjhlb',
+        component: clzjhlb
+      }, {
         path: '/clxqjh',
         component: clxqjh
+      }, {
+        path: '/clxqjhlb',
+        component: clxqjhlb
+      }, {
+        path: '/clht',
+        component: clht
+      }, {
+        path: '/clhtlb',
+        component: clhtlb
+      }, {
+        path: '/clrk',
+        component: clrk
       },
       {
         path: '/tbxx',
@@ -162,6 +182,7 @@ const router = new Router({
         components: {
           default: cCustomer
         }
+    }, {
       },{
       path: '/cPersonal',
       components: {
