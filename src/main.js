@@ -8,11 +8,9 @@ import 'element-ui/lib/theme-chalk/index.css'
 import axios from 'axios'
 
 Vue.use(ElementUI)
-Vue.config.productionTip = false
+// Vue.config.productionTip = false
 axios.defaults.baseURL = "http://localhost:7777"
 
-//导入axios库和qs库
-import axios from 'axios';
 //导入QS
 import qs from 'qs';
 //导入通用的axios对象
@@ -27,10 +25,5 @@ new Vue({
   el: '#app',
   router,
   components: { App },
-  data:function(){
-    return{
-      myEvent: new Vue()
-    }
-  },
   template: '<App/>'
 })
