@@ -12,6 +12,19 @@ import cMatters from "@/components/column/c_matters.vue"
 import clzjh from "@/components/pht/clgl/clzjh.vue"
 import clxqjh from "@/components/pht/clgl/clxqjh.vue"
 
+import grda from "@/components/lyh/grda.vue";
+import zaizhirenyuan from "../components/lyh/zaizhirenyuan";
+import contract from "../components/lyh/contract";
+import addcontract from "../components/lyh/addcontract";
+import addpositive from "../components/lyh/addpositive";
+import positive from "../components/lyh/positive";
+import departure from "../components/lyh/departure";
+import mobilize from "../components/lyh/mobilize";
+import addmobilize from "../components/lyh/addmobilize";
+import card from "../components/lyh/card";
+import addcard from "../components/lyh/addcard";
+import adddeparture from "../components/lyh/adddeparture";
+
 Vue.use(Router)
 const originalPush = Router.prototype.push
 Router.prototype.push = function push(location) {
@@ -21,7 +34,6 @@ const router = new Router({
   routes:[{
     name:main,
     path: "/main",
-<<<<<<< HEAD
     component: main,
     redirect: '/cProject',
     children: [{
@@ -47,16 +59,49 @@ const router = new Router({
       }
     },{
       path: '/cMatters',
-      components: {
-        default: cMatters
-      }
+      component:cMatters,
+      redirect: '/grda',
+      children: [{
+        path: '/grda',
+        component: grda
+      },{
+        path: '/zaizhirenyuan',
+        component: zaizhirenyuan,
+      },{
+        path: '/contract',
+        component: contract
+      },{
+        path: '/addcontract',
+        component: addcontract,
+      },{
+        path: '/addpositive',
+        component: addpositive,
+      },{
+        path: '/positive',
+        component: positive,
+      },{
+        path: '/departure',
+        component: departure,
+      },{
+        path: '/adddeparture',
+        component: adddeparture
+      },{
+        path: '/mobilize',
+        component: mobilize,
+      },
+        {
+          path: '/addmobilize',
+          component: addmobilize
+        },{
+        path: '/card',
+          component: card
+        },{
+        path: '/addcard',
+          component: addcard
+        }
+      ]
     }]
-  }]
-=======
-    component: main
-  },
-    ],
+  }],
   mode:'history'//去掉地址中的#号
->>>>>>> a85de72b9fd977522cc9f414cc0c63b1dfbb05d3
 })
 export default router;
