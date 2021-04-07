@@ -9,21 +9,21 @@
       <el-form :model="lxr" :rules="rules" ref="lxr" :inline="true" style="margin-left: 50px; margin-top: 50px;">
         <el-form-item style="margin-left: 400px;"><span style="font-size: 20px;font-weight:1000;">客户联系人</span>
         </el-form-item><br />
-        <el-form-item label="客户编号" label-width="100px" prop="khxx_bh">
-          <el-input v-model="lxr.khxx_bh" disabled placeholder="自动生成" style="width: 300px;"></el-input>
+        <el-form-item label="客户编号" label-width="100px" prop="khxxBh">
+          <el-input v-model="lxr.khxxBh" disabled placeholder="自动生成" style="width: 300px;"></el-input>
         </el-form-item>
-        <el-form-item label="客户姓名" label-width="100px" prop="khxx_xm">
+        <el-form-item label="客户姓名" label-width="100px" prop="khxxXm">
           <!-- <el-input v-model="lxr.lxr_khlx" style="width: 300px;"></el-input> -->
-          <el-select v-model="lxr.khxx_xm" placeholder="请选择客户" style="width: 300px;">
+          <el-select v-model="lxr.khxxXm" placeholder="请选择客户" style="width: 300px;">
             <el-option label="民营企业" value="民营企业"></el-option>
             <el-option label="外资企业" value="外资企业"></el-option>
             <el-option label="事业单位" value="事业单位"></el-option>
             <el-option label="政府单位" value="政府单位"></el-option>
           </el-select>
         </el-form-item><br />
-        <el-form-item label="联系人姓名" label-width="100px" prop="lxr_xm">
-          <el-input v-model="lxr.lxr_xm" style="width: 300px;"></el-input>
-          <!-- <el-select v-model="lxr.lxr_xm" placeholder="请选择行业" style="width: 300px;">
+        <el-form-item label="联系人姓名" label-width="100px" prop="lxrXm">
+          <el-input v-model="lxr.lxrXm" style="width: 300px;"></el-input>
+          <!-- <el-select v-model="lxr.lxrXm" placeholder="请选择行业" style="width: 300px;">
             <el-option label="办公文教" value="办公文教"></el-option>
             <el-option label="信息产业" value="信息产业"></el-option>
             <el-option label="石油化工" value="石油化工"></el-option>
@@ -33,29 +33,29 @@
             <el-option label="服装纺织" value="服装纺织"></el-option>
           </el-select> -->
         </el-form-item>
-        <el-form-item label="联系人电话" label-width="100px" prop="lxr_dh">
-          <el-input v-model="lxr.lxr_dh" style="width: 300px;"></el-input>
-          <!-- <el-select v-model="lxr.lxr_dh" placeholder="请选择来源" style="width: 300px;">
+        <el-form-item label="联系人电话" label-width="100px" prop="lxrDh">
+          <el-input v-model="lxr.lxrDh" style="width: 300px;"></el-input>
+          <!-- <el-select v-model="lxr.lxrDh" placeholder="请选择来源" style="width: 300px;">
             <el-option label="电话营销" value="电话营销"></el-option>
             <el-option label="客户介绍" value="客户介绍"></el-option>
             <el-option label="朋友介绍" value="朋友介绍"></el-option>
             <el-option label="百度广告" value="百度广告"></el-option>
           </el-select> -->
         </el-form-item><br />
-        <el-form-item label="联系人职位" label-width="100px" prop="lxr_zw">
-          <el-input v-model="lxr.lxr_zw" style="width: 300px;"></el-input>
+        <el-form-item label="联系人职位" label-width="100px" prop="lxrZw">
+          <el-input v-model="lxr.lxrZw" style="width: 300px;"></el-input>
           <!-- <el-cascader placeholder="试试搜索" :options="options" clearable filterable></el-cascader> -->
         </el-form-item>
-        <el-form-item label="影响力" label-width="100px" prop="lxr_yxl">
-          <!-- <el-input v-model="lxr.lxr_yxl" style="width: 300px;"></el-input> -->
-          <el-select v-model="lxr.lxr_yxl" placeholder="请选择" style="width: 300px;">
+        <el-form-item label="影响力" label-width="100px" prop="lxrYxl">
+          <!-- <el-input v-model="lxr.lxrYxl" style="width: 300px;"></el-input> -->
+          <el-select v-model="lxr.lxrYxl" placeholder="请选择" style="width: 300px;">
             <el-option label="推荐者" value="推荐者"></el-option>
             <el-option label="决策者" value="决策者"></el-option>
             <el-option label="使用者" value="使用者"></el-option>
           </el-select>
         </el-form-item><br />
-        <el-form-item label="联系人状态" label-width="100px" prop="lxr_zt">
-          <el-select v-model="lxr.lxr_zt" placeholder="请选择" style="width: 300px;">
+        <el-form-item label="联系人状态" label-width="100px" prop="lxrZt">
+          <el-select v-model="lxr.lxrZt" placeholder="请选择" style="width: 300px;">
             <el-option label="在职" value="在职"></el-option>
             <el-option label="离职" value="离职"></el-option>
           </el-select>
@@ -90,37 +90,37 @@
     data() {
       return {
         lxr: {
-          lxr_bh: '',
-          khxx_bh: '',
-          lxr_xm: '',
-          lxr_dh: '',
-          lxr_zw: '',
-          lxr_yxl: '',
-          lxr_zt: '',
-          khxx_xm: '',
+          lxrBh: '',
+          khxxBh: '',
+          lxrXm: '',
+          lxrDh: '',
+          lxrZw: '',
+          lxrYxl: '',
+          lxrZt: '',
+          khxxXm: '',
         },
         rules: {
-          lxr_xm: [{
+          lxrXm: [{
             required: true,
             message: '请输入联系人姓名',
             trigger: 'blur'
           }, ],
-          lxr_yxl: [{
+          lxrYxl: [{
             required: true,
             message: '请选择',
             trigger: 'change'
           }, ],
-          lxr_zt: [{
+          lxrZt: [{
             required: true,
             message: '请选择',
             trigger: 'change'
           }, ],
-          lxr_dh: [{
+          lxrDh: [{
             required: true,
             message: '请输入联系人电话',
             trigger: 'blur'
           }, ],
-          khxx_xm: [{
+          khxxXm: [{
             required: true,
             message: '请选择客户',
             trigger: 'change'
@@ -133,6 +133,11 @@
         this.$refs[formName].validate((valid) => {
           if (valid) {
             /* alert('添加成功!'); */
+            this.$post("/lxr/addlxr/" + JSON.stringify(this.lxr)).then(v => {
+              console.log(v.data.info)
+              this.$message.success(v.data.info);
+              this.$refs[formName].resetFields();
+            })
           } else {
             /* console.log('error 添加失败!!'); */
             this.$message.error("添加失败!");
