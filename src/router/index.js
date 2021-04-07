@@ -16,6 +16,7 @@ import clxqjhlb from "@/components/pht/clgl/clxqjhlb.vue"
 import clht from "@/components/pht/clgl/clht.vue"
 import clhtlb from "@/components/pht/clgl/clhtlb.vue"
 import clrk from "@/components/pht/clgl/clrk.vue"
+import clrklb from "@/components/pht/clgl/clrklb.vue"
 
 Vue.use(Router)
 const originalPush = Router.prototype.push
@@ -53,6 +54,9 @@ const router = new Router({
       }, {
         path: '/clrk',
         component: clrk
+      },{
+        path: '/clrklb',
+        component: clrklb
       }]
     }, {
       path: '/cCustomer',

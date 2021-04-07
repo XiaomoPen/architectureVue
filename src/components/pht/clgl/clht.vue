@@ -23,7 +23,7 @@
       <el-row>
         <el-col :span="24">
           <el-form-item>
-            <el-button type="primary" size="small" @click="push()">添加</el-button>
+            <el-button type="primary" size="small" @click="push()" v-if="isAdd">添加</el-button>
           </el-form-item>
         </el-col>
       </el-row>
@@ -38,7 +38,7 @@
         </el-col>
         <el-col :span="8">
           <el-form-item label="合同编号:">
-            <el-input placeholder="添加后自动生成" :disabled="true">
+            <el-input placeholder="添加后自动生成"  v-model="contract.contractNumber" :disabled="true">
             </el-input>
           </el-form-item>
         </el-col>
@@ -196,7 +196,7 @@
     </el-form>
     <div style="font-size: 16px;margin: 10px 0;display: flex;justify-content: space-between;align-items: center;">
       材料明细
-      <el-button type="primary" @click="drawer = true" size="mini">添加</el-button>
+      <el-button type="primary" @click="drawer = true" size="mini" v-if="isAdd">添加</el-button>
     </div>
     <el-table :data="tableData" border style="width: 100%">
       <el-table-column prop="clcrkmxName" width="140" label="材料名称" fixed>
@@ -218,7 +218,7 @@
       <el-table-column prop="clcrkmxNoIncluded" label="小计">
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="100">
-        <template slot-scope="scope">
+        <template slot-scope="scope" v-if="isAdd">
           <el-button type="danger" size="mini" @click="delPlansDetailds(scope)">删除</el-button>
         </template>
       </el-table-column>
@@ -253,7 +253,7 @@
           <el-input v-model="clcrkmx.clcrkmxNoIncluded" type="number" disabled></el-input>
         </el-form-item>
         <div style="text-align: right;padding-right: 20px;">
-          <el-button type="primary" @click="addPlansDetailds" size="small">添加</el-button>
+          <el-button type="primary" @click="addPlansDetailds" size="small" v-if="isAdd">添加</el-button>
         </div>
       </el-form>
     </el-drawer>
@@ -269,6 +269,8 @@
             return time.getTime() < Date.now() - 8.64e7;
           },
         },
+        isAdd:true,
+        pid:this.$route.query.data,
         tbxxDate: "",
         drawer: false,
         isRequired: true,
@@ -508,44 +510,59 @@
     },
     created() {
       this.tbxxDate = new Date();
-      this.$axios.get("/lxxx/queryAll").then(res => {
-        if (res.data.state == 200) {
-          this.projects = res.data.content;
-        } else {
-          this.$message({
-            showClose: true,
-            message: '项目信息获取失败',
-            type: 'warning'
-          });
-        }
-      });
-      this.$axios.get("/material/getTotalMaterialno").then(res => {
-        if (res.data.state == 200) {
-          this.total = res.data.content
-        } else {
-          this.$message({
-            showClose: true,
-            message: '源单数据获取失败',
-            type: 'warning'
-          });
-        }
-      });
-      this.$axios.get("/material/getNeedMaterialno").then(res => {
-        if (res.data.state == 200) {
-          this.need = res.data.content
-        } else {
-          this.$message({
-            showClose: true,
-            message: '源单数据获取失败',
-            type: 'warning'
-          });
-        }
-      });
-      this.$axios.get("/gys/queryAll").then(res => {
-        if (res.data.state == 200) {
-          this.gys = res.data.content;
-        }
-      });
+      if(this.pid==undefined){
+        this.isAdd=true;
+        this.$axios.get("/lxxx/queryAll").then(res => {
+          if (res.data.state == 200) {
+            this.projects = res.data.content;
+          } else {
+            this.$message({
+              showClose: true,
+              message: '项目信息获取失败',
+              type: 'warning'
+            });
+          }
+        });
+        this.$axios.get("/material/getTotalMaterialno").then(res => {
+          if (res.data.state == 200) {
+            this.total = res.data.content
+          } else {
+            this.$message({
+              showClose: true,
+              message: '源单数据获取失败',
+              type: 'warning'
+            });
+          }
+        });
+        this.$axios.get("/material/getNeedMaterialno").then(res => {
+          if (res.data.state == 200) {
+            this.need = res.data.content
+          } else {
+            this.$message({
+              showClose: true,
+              message: '源单数据获取失败',
+              type: 'warning'
+            });
+          }
+        });
+        this.$axios.get("/gys/queryAll").then(res => {
+          if (res.data.state == 200) {
+            this.gys = res.data.content;
+          }
+        });
+      }else{
+        this.isAdd=false;
+        this.loading=true;
+        this.$axios.get("/material/getMCvo/"+this.pid).then(res => {
+          this.loading=false;
+          if (res.data.state == 200) {
+            var data=res.data.content;
+            this.contract=data.contract;
+            this.contractDetailed=data.detailed;
+            this.tableData=data.clcrkmxs;
+          }
+        });
+      }
     }
   }
 </script>

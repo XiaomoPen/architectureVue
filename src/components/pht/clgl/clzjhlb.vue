@@ -31,6 +31,7 @@
          <el-table-column prop="planApproval" label="审核状态"></el-table-column>
           <el-table-column fixed="right" label="操作">
             <template slot-scope="scope">
+              <el-button type="text" size="small" @click="$router.push({path:'/clzjh',query:{data:scope.row.planNumber}})">查看</el-button>
               <el-button type="text" size="small" v-if="scope.row.planApproval=='未提交'" @click="submit(scope)">发起审批</el-button>
               <el-button type="text" size="small" v-if="scope.row.planApproval=='未审批'" @click="sure(scope)">同意</el-button>
               <el-button type="text" size="small" v-if="scope.row.planApproval=='未审批'" @click="nosure(scope)">不同意</el-button>
@@ -69,6 +70,12 @@
         loading:true,
         searchData:""
       }
+    },
+    watch:{
+    	$route(to){
+    		content=to.query.content;
+    		console.log(content);
+    	}
     },
     methods: {
       //搜索
