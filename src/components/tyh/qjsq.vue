@@ -18,27 +18,14 @@
 
       <el-row>
         <el-col :span="8">
-          <el-form-item label="请假人:" prop="" clearable>
-            <el-input placeholder="请输入" class="filter-item" />
-          </el-form-item>
-        </el-col>
-        <el-col :span="8">
-            <el-form-item label="部门:" prop="" clearable>
-              <el-input></el-input>
-            </el-form-item>
-        </el-col>
-        <el-col :span="8">
-          <el-form-item label="职位:" prop="" clearable>
-            <el-input></el-input>
+          <el-form-item label="请假人" prop="title">
+            <el-select @click="seluser" placeholder="请选择员工" :date="userList" v-model="qjFrom.tPmUser" value-key="userNumber" class="filter-item" margin-left="100px">
+              <el-option :key="item.userNumber" v-for="item in userList"  :label="item.userName" :value="item"></el-option>
+            </el-select>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="8">
-          <el-form-item label="请假类型:" prop="">
-            <el-input v-model="qjFrom.applyType"></el-input>
-          </el-form-item>
-        </el-col>
         <el-form-item label="开始日期" prop="type">
           <el-col :span="8">
             <el-date-picker v-model="qjFrom.applyDate" type="date" placeholder="选择日期"></el-date-picker>
@@ -85,7 +72,12 @@
           applyReason:"",
           applyTheme:"",
           applyDatetime:"",
-        }
+          tPmUser: {
+            userNumber: '',
+            userName: '',
+          },
+        },
+        userList:[],
       }
     },
     methods: {
@@ -93,12 +85,36 @@
         console.log(this.qjFrom)
         this.$axios.post("http://localhost:7777/shenqing/addapplyqj",this.qjFrom)
           .then((v) => {
+            alert("新增成功")
+            this.cleraFrom()
           }).catch()
       },
-    created() {
+      cleraFrom() {
+        this.qjFrom={
+          applyNum:"",
+          applyType:"",
+          userNumber:"",
+          applyDate:"",
+          applyTime:"",
+          applyNumber:"",
+          applyReason:"",
+          applyTheme:"",
+          applyDatetime:"",
+        }
+      },
+      seluser(){
+        console.log(this.userList)
+        this.$axios.get("http://localhost:7777/shenpi/seluser")
+          .then((v) => {
+            this.userList = v.data
+          }).catch()
+      },
 
-    }
-    }
+    },
+    created() {
+      this.seluser()
+    },
+
   }
 
 </script>

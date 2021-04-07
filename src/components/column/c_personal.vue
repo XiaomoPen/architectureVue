@@ -38,7 +38,35 @@
          <router-view></router-view>
       </el-main>
     </el-container>
+
+
+
+<!--    <el-dialog :visible.sync="diformVisibleT" width="40%">-->
+<!--      <el-form :ref="actFrom" :model="actFrom" label-position="left" label-width="100px" style="width: 400px; margin-left:80px;">-->
+<!--        <el-form-item label="退款理由" prop="type">-->
+<!--          <el-select v-model="abc" placeholder="请选择" @change="wwe()">-->
+<!--            <el-option-->
+<!--              v-for="item in options"-->
+<!--              :key="item.value"-->
+<!--              :label="item.label"-->
+<!--              :value="item.value">-->
+<!--            </el-option>-->
+<!--          </el-select>-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="应退款" prop="type">-->
+<!--          <el-input v-model="biu" :disabled="true"></el-input>-->
+<!--        </el-form-item>-->
+<!--      </el-form>-->
+<!--      <div slot="footer" class="dialog-footer">-->
+<!--        &lt;!&ndash;取消按钮&ndash;&gt;-->
+<!--        <el-button @click="formVisibleT = false">取消</el-button>-->
+<!--        &lt;!&ndash;确定按钮&ndash;&gt;-->
+<!--        <el-button @click="formVisibleT = false,tdzs()" type="primary" >确定</el-button>-->
+<!--      </div>-->
+<!--    </el-dialog>-->
   </div>
+
+
 </template>
 
 <script>

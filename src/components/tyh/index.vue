@@ -83,7 +83,6 @@
               this.$message.error(res.data)
             } else {
               window.sessionStorage.setItem('token', JSON.stringify(res.data))
-              this.$router.push({ path: this.redirect || '/qjsq', query: this.otherQuery })
               this.loading = false
             }
             // console.log(res)

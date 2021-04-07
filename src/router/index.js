@@ -16,6 +16,13 @@ import clxqjhlb from "@/components/pht/clgl/clxqjhlb.vue"
 import clht from "@/components/pht/clgl/clht.vue"
 import clhtlb from "@/components/pht/clgl/clhtlb.vue"
 import clrk from "@/components/pht/clgl/clrk.vue"
+//谭奕豪
+import qjsq from "@/components/tyh/qjsq.vue"
+import login from "@/components/tyh/index.vue"
+import jbsq from "@/components/tyh/jbsq.vue"
+import ccsq from "@/components/tyh/ccsq.vue"
+import wdsq from "@/components/tyh/wdsq.vue"
+import dblc from "@/components/tyh/dblc.vue"
 
 Vue.use(Router)
 const originalPush = Router.prototype.push
@@ -55,16 +62,34 @@ const router = new Router({
         component: clrk
       }]
     }, {
+      path: '/login',
+      component: login,
+    },{
       path: '/cCustomer',
       components: {
         default: cCustomer
       }
     }, {
       path: '/cPersonal',
-      components: {
-        default: cPersonal
-      }
-    }, {
+      component:cPersonal,
+      redirect: '/qjsq',
+      children: [{
+        path: '/qjsq',
+        component: qjsq
+      },{
+        path: '/jbsq',
+        component: jbsq
+      },{
+        path: '/ccsq',
+        component: ccsq
+      },{
+        path: '/wdsq',
+        component: wdsq
+      },{
+        path: '/dblc',
+        component: dblc
+      },],
+    },{
       path: '/cMatters',
       components: {
         default: cMatters

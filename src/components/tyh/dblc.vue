@@ -3,8 +3,8 @@
     <div>
       <el-row :gutter="10">
         <el-col :span="5">
-          <el-input placeholder="请输入提交人" clearable>
-            <el-button slot="append" icon="el-icon-search"></el-button>
+          <el-input v-model="sss" placeholder="请输入流程编号" clearable>
+            <el-button @click="selmyapp" slot="append" icon="el-icon-search"></el-button>
           </el-input>
         </el-col>
       </el-row>
@@ -14,7 +14,6 @@
         <el-table :data="tableList.content" border style="width: 100%" >
           <el-table-column prop="myapplyNumber" label="流程编号" width=""></el-table-column>
           <el-table-column prop="myapplyName" label="流程名称" width=""></el-table-column>
-          <el-table-column prop="" label="发起部门"width=""></el-table-column>
           <el-table-column prop="tPmUser.userName" label="发起人" width=""></el-table-column>
           <el-table-column prop="tPsApply.applyDate" label="发起日期" width=""></el-table-column>
           <el-table-column prop="myapplyUrge" label="催办"></el-table-column>
@@ -44,11 +43,12 @@
     data() {
       return {
         tableList:[],
+        sss:'',
       }
     },
     methods: {
       selmyapp(){
-        this.$axios.get("http://localhost:7777/shenpi/selmyapp2")
+        this.$axios.get("http://localhost:7777/shenpi/selmyapp2",{params:{s:this.sss}})
           .then((v) => {
             this.tableList = v.data
             console.log(this.tableList)
