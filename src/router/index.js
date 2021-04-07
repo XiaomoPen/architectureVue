@@ -16,6 +16,7 @@ import clxqjhlb from "@/components/pht/clgl/clxqjhlb.vue"
 import clht from "@/components/pht/clgl/clht.vue"
 import clhtlb from "@/components/pht/clgl/clhtlb.vue"
 import clrk from "@/components/pht/clgl/clrk.vue"
+import clrklb from "@/components/pht/clgl/clrklb.vue"
 
 //王涛文
 import tbxx from "@/components/wtw/tbgl/tbxx.vue"
@@ -48,6 +49,19 @@ import khlxrf from "@/components/csp/khlxrf.vue"
 import lxjl from "@/components/csp/lxjl.vue"
 import lxjlf from "@/components/csp/lxjlf.vue"
 import wdkh from "@/components/csp/wdkh.vue"
+import grda from "@/components/lyh/grda.vue";
+import zaizhirenyuan from "../components/lyh/zaizhirenyuan";
+import contract from "../components/lyh/contract";
+import addcontract from "../components/lyh/addcontract";
+import addpositive from "../components/lyh/addpositive";
+import positive from "../components/lyh/positive";
+import departure from "../components/lyh/departure";
+import mobilize from "../components/lyh/mobilize";
+import addmobilize from "../components/lyh/addmobilize";
+import card from "../components/lyh/card";
+import addcard from "../components/lyh/addcard";
+import adddeparture from "../components/lyh/adddeparture";
+
 Vue.use(Router)
 const originalPush = Router.prototype.push
 Router.prototype.push = function push(location) {
@@ -84,6 +98,9 @@ const router = new Router({
       }, {
         path: '/clrk',
         component: clrk
+      },{
+        path: '/clrklb',
+        component: clrklb
       },
       {
         path: '/tbxx',
@@ -185,7 +202,47 @@ const router = new Router({
       component:cPersonal
     },{
       path: '/cMatters',
-      component:cMatters
+      component:cMatters,
+      redirect: '/grda',
+      children: [{
+        path: '/grda',
+        component: grda
+      },{
+        path: '/zaizhirenyuan',
+        component: zaizhirenyuan,
+      },{
+        path: '/contract',
+        component: contract
+      },{
+        path: '/addcontract',
+        component: addcontract,
+      },{
+        path: '/addpositive',
+        component: addpositive,
+      },{
+        path: '/positive',
+        component: positive,
+      },{
+        path: '/departure',
+        component: departure,
+      },{
+        path: '/adddeparture',
+        component: adddeparture
+      },{
+        path: '/mobilize',
+        component: mobilize,
+      },
+        {
+          path: '/addmobilize',
+          component: addmobilize
+        },{
+        path: '/card',
+          component: card
+        },{
+        path: '/addcard',
+          component: addcard
+        }
+      ]
     }]
   }],
   mode:'history'//去掉地址中的#号

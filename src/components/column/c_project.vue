@@ -123,7 +123,7 @@
             <el-submenu index="5-3">
               <template slot="title">材料入库</template>
               <el-menu-item index="5-3-1" @click="$router.push('/clrk')">材料入库</el-menu-item>
-              <el-menu-item index="5-3-2">材料入库列表</el-menu-item>
+              <el-menu-item index="5-3-2" @click="$router.push('/clrklb')">材料入库列表</el-menu-item>
             </el-submenu>
             <el-submenu index="5-4">
               <template slot="title">材料出库</template>

@@ -34,6 +34,7 @@
          <el-table-column prop="contractApproval" label="流程状态"></el-table-column>
           <el-table-column fixed="right" label="操作">
             <template slot-scope="scope">
+              <el-button type="text" size="small" @click="$router.push({path:'/clht',query:{data:scope.row.contractNumber}})">查看</el-button>
               <el-button type="text" size="small" v-if="scope.row.contractApproval=='未提交'" @click="submit(scope)">发起审批</el-button>
               <el-button type="text" size="small" v-if="scope.row.contractApproval=='未审批'" @click="sure(scope)">同意</el-button>
               <el-button type="text" size="small" v-if="scope.row.contractApproval=='未审批'" @click="nosure(scope)">不同意</el-button>

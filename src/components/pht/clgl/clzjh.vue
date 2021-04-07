@@ -24,7 +24,7 @@
       <el-row>
         <el-col :span="24">
           <el-form-item>
-            <el-button type="primary" size="small" @click="push()">添加</el-button>
+            <el-button type="primary" size="small" @click="push()" v-if="isAdd">添加</el-button>
           </el-form-item>
         </el-col>
       </el-row>
@@ -75,7 +75,7 @@
     </el-form>
     <div style="font-size: 16px;margin: 10px 0;display: flex;justify-content: space-between;align-items: center;">
       材料明细
-      <el-button type="primary" @click="drawer = true" size="mini">添加</el-button>
+      <el-button type="primary" @click="drawer = true" size="mini" v-if="isAdd">添加</el-button>
     </div>
     <el-table :data="tableData" border style="width: 100%">
       <el-table-column prop="materialName" width="140" label="材料名称" fixed>
@@ -89,7 +89,7 @@
       <el-table-column prop="materialMask" label="备注">
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="100">
-        <template slot-scope="scope">
+        <template slot-scope="scope" v-if="isAdd">
           <el-button type="danger" size="mini" @click="delPlansDetailds(scope)">删除</el-button>
         </template>
       </el-table-column>
@@ -130,8 +130,16 @@
         plansDetailds:{materialName:"",materialNumber:"",materialCompany:"",materialSum:"",materialMask:""},
         tableData: [],
         projects:[],
-        loading:false
+        loading:false,
+        isAdd:true,
+        pid:this.$route.query.data
       };
+    },
+    watch:{
+      pid(val){
+        console.log(1);
+        console.log(val);
+      }
     },
     methods: {
       //添加材料明细
@@ -176,13 +184,27 @@
     },
     created() {
       this.tbxxDate = new Date();
-      this.$axios.get("/lxxx/queryAll").then(res=>{
-        if(res.data.state==200){
-          this.projects=res.data.content;
-        }else{
-          this.$message({showClose: true, message: '项目信息获取失败',type: 'warning'});
-        }
-      });
+      if(this.pid==undefined){
+        this.isAdd=true;
+        this.$axios.get("/lxxx/queryAll").then(res=>{
+          if(res.data.state==200){
+            this.projects=res.data.content;
+          }else{
+            this.$message({showClose: true, message: '项目信息获取失败',type: 'warning'});
+          }
+        });
+      }else{
+        this.isAdd=false;
+        this.$axios.get("/material/getMaterialByNumber/"+this.pid).then(res=>{
+          if(res.data.state==200){
+            var data=JSON.parse(res.data.content);
+            this.plans=data.plans;
+            this.tableData=data.detaileds;
+          }else{
+            this.$message({showClose: true, message: '项目信息获取失败',type: 'warning'});
+          }
+        });
+      }
     }
   }
 </script>
