@@ -11,6 +11,13 @@ import cMatters from "@/components/column/c_matters.vue"
 // 彭海涛
 import clzjh from "@/components/pht/clgl/clzjh.vue"
 import clxqjh from "@/components/pht/clgl/clxqjh.vue"
+//谭奕豪
+import qjsq from "@/components/tyh/qjsq.vue"
+import login from "@/components/tyh/index.vue"
+import jbsq from "@/components/tyh/jbsq.vue"
+import ccsq from "@/components/tyh/ccsq.vue"
+import wdsq from "@/components/tyh/wdsq.vue"
+import dblc from "@/components/tyh/dblc.vue"
 
 Vue.use(Router)
 const originalPush = Router.prototype.push
@@ -21,7 +28,6 @@ const router = new Router({
   routes:[{
     name:main,
     path: "/main",
-<<<<<<< HEAD
     component: main,
     redirect: '/cProject',
     children: [{
@@ -36,27 +42,41 @@ const router = new Router({
         component: clxqjh
       }]
     },{
+      path: '/login',
+      component: login,
+    },
+      {
       path: '/cCustomer',
       components: {
         default: cCustomer
       }
     },{
       path: '/cPersonal',
-      components: {
-        default: cPersonal
-      }
+      component:cPersonal,
+      redirect: '/qjsq',
+      children: [{
+        path: '/qjsq',
+        component: qjsq
+      },{
+        path: '/jbsq',
+        component: jbsq
+      },{
+        path: '/ccsq',
+        component: ccsq
+      },{
+        path: '/wdsq',
+        component: wdsq
+      },{
+        path: '/dblc',
+        component: dblc
+      },],
     },{
       path: '/cMatters',
       components: {
         default: cMatters
       }
     }]
-  }]
-=======
-    component: main
-  },
-    ],
+  }],
   mode:'history'//去掉地址中的#号
->>>>>>> a85de72b9fd977522cc9f414cc0c63b1dfbb05d3
 })
 export default router;

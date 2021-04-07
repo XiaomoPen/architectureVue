@@ -18,28 +18,40 @@
             </template>
             <el-submenu index="1-1">
               <template slot="title">流程发起</template>
-              <el-menu-item index="1-1-1">请假申请</el-menu-item>
-              <el-menu-item index="1-1-2">加班申请</el-menu-item>
-              <el-menu-item index="1-1-3">出差申请</el-menu-item>
+              <el-menu-item index="1-1-1" @click="$router.push('/qjsq')">请假申请</el-menu-item>
+              <el-menu-item index="1-1-2" @click="$router.push('/jbsq')">加班申请</el-menu-item>
+              <el-menu-item index="1-1-3" @click="$router.push('/ccsq')">出差申请</el-menu-item>
             </el-submenu>
             <el-submenu index="1-2">
               <template slot="title">我的申请</template>
-              <el-menu-item index="1-2-1">我的申请</el-menu-item>
+              <el-menu-item index="1-2-1" @click="$router.push('/wdsq')">我的申请</el-menu-item>
             </el-submenu>
             <el-submenu index="1-3">
               <template slot="title">待办流程</template>
-              <el-menu-item index="1-3-1">待办流程</el-menu-item>
+              <el-menu-item index="1-3-1" @click="$router.push('/dblc')">待办流程</el-menu-item>
             </el-submenu>
           </el-submenu>
         </el-menu>
       </el-aside>
       <el-main>
-        ss
-        <!-- <router-view></router-view> -->
+
+         <router-view></router-view>
       </el-main>
     </el-container>
   </div>
 </template>
 
 <script>
+  export default {
+    data: function () {
+
+    },
+    methods: {},
+    created() {
+      this.$root.myEvent.$on("pushAddress", function (msg){
+        this.address = msg;
+        console.log(this.address);
+      });
+    }
+  }
 </script>
