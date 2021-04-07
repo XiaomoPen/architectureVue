@@ -18,17 +18,17 @@
   }
 </style>
 <template>
-  <div>
+  <div v-loading="loading">
     <el-form :inline="true" ref="ruleForm" label-width="120px"
-      class="demo-form-inline">
+      class="demo-form-inline" >
       <el-row>
         <el-col :span="24">
           <el-form-item>
-            <el-button type="primary" size="small">添加</el-button>
+            <el-button type="primary" size="small" @click="push()">添加</el-button>
           </el-form-item>
         </el-col>
       </el-row>
-      <h2 style="text-align: center;margin-bottom: 20px;">材料需求计划</h2>
+      <h2 style="text-align: center;margin-bottom: 20px;">材料需用计划</h2>
       <div style="font-size: 16px;">基本信息</div>
       <el-row>
         <el-col :span="8">
@@ -38,27 +38,33 @@
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="计划编号:" prop="添加后自动生成">
+          <el-form-item label="计划编号:">
             <el-input placeholder="添加后自动生成" :disabled="true">
             </el-input>
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="计划主题:" prop="请输入计划主题">
+          <el-form-item label="计划主题:" :required='isRequired'>
             <el-input v-model="plans.planName">
             </el-input>
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="项目名称">
-            <el-select placeholder="请选择所属项目">
-              <el-option label="区域一" value="shanghai"></el-option>
-              <el-option label="区域二" value="beijing"></el-option>
+          <el-form-item label="项目名称" :required='isRequired'>
+            <el-select placeholder="请选择所属项目" v-model="plans.lxxxdjBh">
+              <el-option v-for="item in projects" :key="item.lxxxdjBh" :label="item.lxxxdjXmmc" :value="item.lxxxdjBh"></el-option>
             </el-select>
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="编制人:" prop="请输入编制人">
+          <el-form-item label="源单号">
+            <el-select placeholder="请选择所属源单号" v-model="plans.planSource">
+              <el-option v-for="item in source" :key="item.planNumber" :label="item.planName" :value="item.planNumber"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="8">
+          <el-form-item label="编制人:">
             <el-input v-model="plans.planPerson">
             </el-input>
           </el-form-item>
@@ -66,7 +72,7 @@
       </el-row>
       <el-row>
         <el-col :span="24">
-          <el-form-item label="备注:" prop="tbxxJj">
+          <el-form-item label="备注:">
             <el-input type="textarea" placeholder="请输入内容" v-model="plans.planMask" rows="5" maxlength="254"
               style="width: 1000px;" show-word-limit>
             </el-input>
@@ -85,7 +91,11 @@
       </el-table-column>
       <el-table-column prop="materialCompany" width="140" label="单位">
       </el-table-column>
-      <el-table-column prop="materialSum" width="140" label="总计划量">
+      <el-table-column prop="materialSum" width="140" label="常用数量">
+      </el-table-column>
+      <el-table-column prop="materialConsultMoney" width="140" label="参考价格">
+      </el-table-column>
+      <el-table-column prop="materialMoney" width="140" label="小计">
       </el-table-column>
       <el-table-column prop="materialMask" label="备注">
       </el-table-column>
@@ -106,8 +116,14 @@
         <el-form-item label="单位">
           <el-input v-model="plansDetailds.materialCompany"></el-input>
         </el-form-item>
-        <el-form-item label="总计划量" :required='isRequired'>
-          <el-input v-model="plansDetailds.materialSum" type="number"></el-input>
+        <el-form-item label="常用数量" :required='isRequired'>
+          <el-input v-model="materialSum" type="number"></el-input>
+        </el-form-item>
+        <el-form-item label="参考价格" :required='isRequired'>
+          <el-input v-model="materialConsultMoney" type="number"></el-input>
+        </el-form-item>
+        <el-form-item label="小计">
+          <el-input v-model="materialMoney" type="number" disabled></el-input>
         </el-form-item>
         <el-form-item label="备注">
           <el-input v-model="plansDetailds.materialMask"></el-input>
@@ -127,11 +143,24 @@
         tbxxDate:"",
         drawer: false,
         isRequired: true,
-        plans:{planName:"",lxxxdjBh:"",planPerson:"",planMask:""},
-        plansDetailds:{materialName:"",materialNumber:"",materialCompany:"",materialSum:"",materialMask:""},
+        plans:{planName:"",lxxxdjBh:"",planPerson:"",planMask:"",planType:1,planSource:"",userNumber:sessionStorage.getItem("userId")},
+        plansDetailds:{materialName:"",materialNumber:"",materialCompany:"",materialSum:0,materialConsultMoney:0,materialMoney:0,materialMask:""},
         tableData: [],
-
+        projects:[],
+        loading:false,
+        materialSum:0,
+        materialConsultMoney:0,
+        materialMoney:0,
+        source:[]
       };
+    },
+    watch:{
+      materialSum(val){
+        this.materialMoney=val*this.materialConsultMoney
+      },
+      materialConsultMoney(val){
+        this.materialMoney=val*this.materialSum
+      }
     },
     methods: {
       //添加材料明细
@@ -140,21 +169,66 @@
           this.$message({showClose: true, message: '材料名称不能为空',type: 'warning'});
           return;
         }
-        if(this.plansDetailds.materialSum.length==0||this.plansDetailds.materialSum.indexOf(".")!=-1){
-          this.$message({showClose: true, message: '总计划量不能为空且必须是>=0的正整数',type: 'warning'});
+        if(this.materialSum==0||this.materialSum<0||this.materialSum.substring(".")==-1){
+          this.$message({showClose: true, message: '常用数量必须是大于0的正整数',type: 'warning'});
           return;
         }
+        if(this.materialConsultMoney==0||this.materialConsultMoney<0){
+          this.$message({showClose: true, message: '参考价格必须>0',type: 'warning'});
+          return;
+        }
+        this.plansDetailds.materialSum=parseFloat(this.materialSum);
+        this.plansDetailds.materialConsultMoney=parseFloat(this.materialConsultMoney);
+        this.plansDetailds.materialMoney=this.materialMoney;
         this.tableData.push(this.plansDetailds);
-        this.plansDetailds={materialName:"",materialNumber:"",materialCompany:"",materialSum:"",materialMask:""};
+        this.plansDetailds={materialName:"",materialNumber:"",materialCompany:"",materialSum:0,materialConsultMoney:0,materialMoney:0,materialMask:""};
+        this.materialSum=0;
+        this.materialConsultMoney=0;
+        this.materialMoney=0;
         this.drawer=false;
       },
       //删除材料明细
       delPlansDetailds(scope){
         this.tableData.splice(scope.$index,1);
+      },
+      //提交
+      push(){
+        if(this.plans.planName.length==0||this.plans.planName.length>64){
+          this.$message({showClose: true, message: '计划主题不能为空并且必须位数<=64',type: 'warning'});
+          return;
+        }
+        if(this.plans.lxxxdjBh.length==0){
+          this.$message({showClose: true, message: '项目名称不能为空',type: 'warning'});
+          return;
+        }
+        var data={plans:this.plans,detaileds:this.tableData};
+        this.loading=true;
+        this.$axios.post("/material/addMaterial",data).then(res=>{
+          this.loading=false;
+          if(res.data.state==200){
+            this.$message({showClose: true, message: '新增材料总计划成功',type: 'success'});
+            this.plans={planName:"",lxxxdjBh:"",planPerson:"",planMask:"",planType:0,userNumber:sessionStorage.getItem("userId")};
+            this.tableData=[];
+          }
+        });
       }
     },
     created() {
       this.tbxxDate = new Date();
+      this.$axios.get("/lxxx/queryAll").then(res=>{
+        if(res.data.state==200){
+          this.projects=res.data.content;
+        }else{
+          this.$message({showClose: true, message: '项目信息获取失败',type: 'warning'});
+        }
+      });
+      this.$axios.get("/material/getTotalMaterialno").then(res=>{
+        if(res.data.state==200){
+          this.source=res.data.content
+        }else{
+          this.$message({showClose: true, message: '源单数据获取失败',type: 'warning'});
+        }
+      });
     }
   }
 </script>
