@@ -278,7 +278,7 @@
           lxxxdjBh: "",
           gysBh: "",
           planNumber: "",
-          userNumber: sessionStorage.getItem("userId")
+          userNumber: '2020111111'
         },
         contractDetailed: {
           contractName: "",
@@ -482,7 +482,7 @@
               lxxxdjBh: "",
               gysBh: "",
               planNumber: "",
-              userNumber: sessionStorage.getItem("userId")
+              userNumber: '2020111111'
             };
             this.contractDetailed = {
               contractName: "",
@@ -560,6 +560,9 @@
             this.contract=data.contract;
             this.contractDetailed=data.detailed;
             this.tableData=data.clcrkmxs;
+            if(this.tableData==undefined||this.tableData.length==0){
+               this.tableData.push({});
+            }
           }
         });
       }

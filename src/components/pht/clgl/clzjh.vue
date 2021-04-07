@@ -200,6 +200,9 @@
             var data=JSON.parse(res.data.content);
             this.plans=data.plans;
             this.tableData=data.detaileds;
+            if(this.tableData==undefined||this.tableData.length==0){
+               this.tableData.push({});
+            }
           }else{
             this.$message({showClose: true, message: '项目信息获取失败',type: 'warning'});
           }

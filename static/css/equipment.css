@@ -1,0 +1,33 @@
+.redColor {
+  color: red;
+}
+
+* {
+  font-size: 12px;
+}
+
+.preset {
+  text-align: right;
+  background-color: #f1f9fe;
+  width: 150px;
+}
+
+.inputBox {
+  width: 180px;
+  height: 50px;
+  line-height: 50px;
+}
+
+.width160 {
+  width: 200px;
+}
+
+.height200 {
+  height: 120px;
+}
+
+.basicInformation {
+  background-color: #f1f6ff;
+  line-height: 40px;
+  height: 40px;
+}

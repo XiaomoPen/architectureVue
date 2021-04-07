@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 //解决Vue前端的Session问题
 import axios from 'axios'
-axios.defaults.withCredentials =  true;
+axios.defaults.withCredentials = true;
 import main from "@/components/main.vue"
 import cProject from "@/components/column/c_project.vue"
 import cCustomer from "@/components/column/c_customer.vue"
@@ -68,188 +68,195 @@ Router.prototype.push = function push(location) {
   return originalPush.call(this, location).catch(err => err)
 }
 const router = new Router({
-  routes:[{
-    name:main,
+  routes: [{
+    path: "/",
+    redirect: '/main',
+  }, {
+    name: main,
     path: "/main",
     component: main,
     redirect: '/cProject',
     children: [{
       path: '/cProject',
-      component:cProject,
+      component: cProject,
       redirect: '/clzjh',
       children: [{
-        path: '/clzjh',
-        component: clzjh
-      },{
-        path: '/clzjhlb',
-        component: clzjhlb
-      }, {
-        path: '/clxqjh',
-        component: clxqjh
-      }, {
-        path: '/clxqjhlb',
-        component: clxqjhlb
-      }, {
-        path: '/clht',
-        component: clht
-      }, {
-        path: '/clhtlb',
-        component: clhtlb
-      }, {
-        path: '/clrk',
-        component: clrk
-      },{
-        path: '/clrklb',
-        component: clrklb
-      },
-      {
-        path: '/tbxx',
-        component: tbxx
-      },
-      {
-        path: '/tbxxlb',
-        component: tbxxlb
-      },{
-        path: '/zbwj',
-        component: zbwj
-      },{
-        path: '/zbwjlb',
-        component: zbwjlb
-      },{
-        path: '/zgzs',
-        component: zgzs
-      },{
-        path: '/zgzslb',
-        component: zgzslb
-      },{
-        path: '/tbwjsc',
-        component: tbwjsc
-      },{
-        path: '/tbwjsclb',
-        component: tbwjsclb
-      },{
-        path: '/xmkc',
-        component: xmkc
-      },{
-        path: '/xmkclb',
-        component: xmkclb
-      },{
-        path: '/tbbzjsq',
-        component: tbbzjsq
-      },{
-        path: '/tbbzjsqlb',
-        component: tbbzjsqlb
-      },{
-        path: '/kbdj',
-        component: kbdj
-      },{
-        path: '/jzdsqklb',
-        component: jzdsqklb
-      },{
-        path: '/zbjgdj',
-        component: zbjgdj
-      },{
-        path: '/zbjgdjlb',
-        component: zbjgdjlb
-      },{
-        path: '/xmywfsq',
-        component: xmywfsq
-      },{
-        path: '/xmywfsqlb',
-        component: xmywfsqlb
-      }]
-    },{
-      path: '/cCustomer',
-        component:cCustomer,
-        redirect: '/htxx',
-        children:[{
-          path: '/htxx',
-          component: htxx
-        },{
-          path: '/htxxf',
-          component: htxxf
-        },{
-          path: '/khfp',
-          component: khfp
-        },{
-          path: '/khfpf',
-          component: khfpf
-        },{
-          path: '/khlxr',
-          component: khlxr
-        },{
-          path: '/khlxrf',
-          component: khlxrf
-        },{
-          path: '/khxx',
-          component: khxx
-        },{
-          path: '/khxxf',
-          component: khxxf
-        },{
-          path: '/lxjl',
-          component: lxjl
-        },{
-          path: '/lxjlf',
-          component: lxjlf
-        },{
-          path: '/wdkh',
-          component: wdkh
-        }],
-        components: {
-          default: cCustomer
+          path: '/clzjh',
+          component: clzjh
+        }, {
+          path: '/clzjhlb',
+          component: clzjhlb
+        }, {
+          path: '/clxqjh',
+          component: clxqjh
+        }, {
+          path: '/clxqjhlb',
+          component: clxqjhlb
+        }, {
+          path: '/clht',
+          component: clht
+        }, {
+          path: '/clhtlb',
+          component: clhtlb
+        }, {
+          path: '/clrk',
+          component: clrk
+        }, {
+          path: '/clrklb',
+          component: clrklb
+        },
+        {
+          path: '/tbxx',
+          component: tbxx
+        },
+        {
+          path: '/tbxxlb',
+          component: tbxxlb
+        }, {
+          path: '/zbwj',
+          component: zbwj
+        }, {
+          path: '/zbwjlb',
+          component: zbwjlb
+        }, {
+          path: '/zgzs',
+          component: zgzs
+        }, {
+          path: '/zgzslb',
+          component: zgzslb
+        }, {
+          path: '/tbwjsc',
+          component: tbwjsc
+        }, {
+          path: '/tbwjsclb',
+          component: tbwjsclb
+        }, {
+          path: '/xmkc',
+          component: xmkc
+        }, {
+          path: '/xmkclb',
+          component: xmkclb
+        }, {
+          path: '/tbbzjsq',
+          component: tbbzjsq
+        }, {
+          path: '/tbbzjsqlb',
+          component: tbbzjsqlb
+        }, {
+          path: '/kbdj',
+          component: kbdj
+        }, {
+          path: '/jzdsqklb',
+          component: jzdsqklb
+        }, {
+          path: '/zbjgdj',
+          component: zbjgdj
+        }, {
+          path: '/zbjgdjlb',
+          component: zbjgdjlb
+        }, {
+          path: '/xmywfsq',
+          component: xmywfsq
+        }, {
+          path: '/xmywfsqlb',
+          component: xmywfsqlb
+        }, {
+          path: '/equipment/requisition',
+          component: () => import('../components/equipment/requisition.vue')
+        },
+        {
+          path: '/equipment/requisitionList',
+          component: () => import('../components/equipment/requisitionList.vue')
         }
+      ]
     }, {
-      },{
+      path: '/cCustomer',
+      component: cCustomer,
+      redirect: '/htxx',
+      children: [{
+        path: '/htxx',
+        component: htxx
+      }, {
+        path: '/htxxf',
+        component: htxxf
+      }, {
+        path: '/khfp',
+        component: khfp
+      }, {
+        path: '/khfpf',
+        component: khfpf
+      }, {
+        path: '/khlxr',
+        component: khlxr
+      }, {
+        path: '/khlxrf',
+        component: khlxrf
+      }, {
+        path: '/khxx',
+        component: khxx
+      }, {
+        path: '/khxxf',
+        component: khxxf
+      }, {
+        path: '/lxjl',
+        component: lxjl
+      }, {
+        path: '/lxjlf',
+        component: lxjlf
+      }, {
+        path: '/wdkh',
+        component: wdkh
+      }]
+    }, {
       path: '/cPersonal',
       components: {
         default: cPersonal
       }
-    },{
+    }, {
       path: '/cMatters',
-      component:cMatters,
+      component: cMatters,
       redirect: '/grda',
       children: [{
-        path: '/grda',
-        component: grda
-      },{
-        path: '/zaizhirenyuan',
-        component: zaizhirenyuan,
-      },{
-        path: '/contract',
-        component: contract
-      },{
-        path: '/addcontract',
-        component: addcontract,
-      },{
-        path: '/addpositive',
-        component: addpositive,
-      },{
-        path: '/positive',
-        component: positive,
-      },{
-        path: '/departure',
-        component: departure,
-      },{
-        path: '/adddeparture',
-        component: adddeparture
-      },{
-        path: '/mobilize',
-        component: mobilize,
-      },
+          path: '/grda',
+          component: grda
+        }, {
+          path: '/zaizhirenyuan',
+          component: zaizhirenyuan,
+        }, {
+          path: '/contract',
+          component: contract
+        }, {
+          path: '/addcontract',
+          component: addcontract,
+        }, {
+          path: '/addpositive',
+          component: addpositive,
+        }, {
+          path: '/positive',
+          component: positive,
+        }, {
+          path: '/departure',
+          component: departure,
+        }, {
+          path: '/adddeparture',
+          component: adddeparture
+        }, {
+          path: '/mobilize',
+          component: mobilize,
+        },
         {
           path: '/addmobilize',
           component: addmobilize
-        },{
-        path: '/card',
+        }, {
+          path: '/card',
           component: card
-        },{
-        path: '/addcard',
+        }, {
+          path: '/addcard',
           component: addcard
         }
       ]
     }]
   }],
-  mode:'history'//去掉地址中的#号
+  mode: 'history' //去掉地址中的#号
 })
 export default router;
