@@ -111,18 +111,18 @@
             <el-submenu index="5-1">
               <template slot="title">材料计划</template>
               <el-menu-item index="5-1-1" @click="$router.push('/clzjh')">材料总计划</el-menu-item>
-              <el-menu-item index="5-1-2" >材料总计划列表</el-menu-item>
+              <el-menu-item index="5-1-2" @click="$router.push('/clzjhlb')">材料总计划列表</el-menu-item>
               <el-menu-item index="5-1-3" @click="$router.push('/clxqjh')">材料需用计划</el-menu-item>
-              <el-menu-item index="5-1-4">材料需用计划列表</el-menu-item>
+              <el-menu-item index="5-1-4" @click="$router.push('/clxqjhlb')">材料需用计划列表</el-menu-item>
             </el-submenu>
             <el-submenu index="5-2">
-              <template slot="title">材料合同</template>
-              <el-menu-item index="5-2-1">材料合同</el-menu-item>
-              <el-menu-item index="5-2-2">材料合同列表</el-menu-item>
+              <template slot="title" >材料合同</template>
+              <el-menu-item index="5-2-1" @click="$router.push('/clht')">材料合同</el-menu-item>
+              <el-menu-item index="5-2-2" @click="$router.push('/clhtlb')">材料合同列表</el-menu-item>
             </el-submenu>
             <el-submenu index="5-3">
               <template slot="title">材料入库</template>
-              <el-menu-item index="5-3-1">材料入库</el-menu-item>
+              <el-menu-item index="5-3-1" @click="$router.push('/clrk')">材料入库</el-menu-item>
               <el-menu-item index="5-3-2">材料入库列表</el-menu-item>
             </el-submenu>
             <el-submenu index="5-4">
