@@ -51,11 +51,11 @@
               <el-menu-item index="1-6-3" @click="$router.push('/zbjgdj')">中标结果登记</el-menu-item>
               <el-menu-item index="1-6-4" @click="$router.push('/zbjgdjlb')">中标结果登记列表</el-menu-item>
             </el-submenu>
-            <el-submenu index="1-7">
+            <!-- <el-submenu index="1-7">
               <template slot="title">项目业务费申请</template>
               <el-menu-item index="1-7-1" @click="$router.push('/xmywfsq')">项目业务费申请</el-menu-item>
               <el-menu-item index="1-7-2" @click="$router.push('/xmywfsqlb')">项目业务费申请列表</el-menu-item>
-            </el-submenu>
+            </el-submenu> -->
           </el-submenu>
           <el-submenu index="2">
             <template slot="title">
@@ -142,8 +142,8 @@
             </template>
             <el-submenu index="6-1">
               <template slot="title">设备领用</template>
-              <el-menu-item index="6-1-1">设备领用申请</el-menu-item>
-              <el-menu-item index="6-1-2">设备领用列表</el-menu-item>
+              <el-menu-item index="6-1-1" @click="$router.push('/equipment/requisition')">设备领用申请</el-menu-item>
+              <el-menu-item index="6-1-2" @click="$router.push('/equipment/requisitionList')">设备领用列表</el-menu-item>
             </el-submenu>
             <el-submenu index="6-2">
               <template slot="title">设备维修</template>

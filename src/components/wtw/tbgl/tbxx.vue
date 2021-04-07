@@ -191,6 +191,10 @@
             required: true,
             message: '请输入预计投标费',
             trigger: 'blur'
+          }, {
+            pattern: /^\d+(\.\d+)?$/,
+            message: '请输入正确的数字',
+            trigger: 'blur'
           }, ],
           tbxxLx: [{
             required: true,
@@ -216,6 +220,10 @@
             required: true,
             message: '请输入预计合同金额',
             trigger: 'blur'
+          }, {
+            pattern: /^\d+(\.\d+)?$/,
+            message: '请输入正确的金额',
+            trigger: 'blur'
           }, ],
           tbxxJsdw: [{
             required: true,
@@ -228,10 +236,20 @@
             trigger: 'blur'
           }, ],
           tbxxLxdh: [{
-            required: true,
-            message: '请输入联系电话',
-            trigger: 'blur'
-          }, ],
+              required: true,
+              message: '请输入联系电话',
+              trigger: 'blur'
+            }, {
+              pattern: /^\d+(\.\d+)?$/,
+              message: '请输入正确的金额',
+              trigger: 'blur'
+            },
+            {
+              pattern: /^1[3|4|5|7|8][0-9]\d{8}$/,
+              message: '请输入正确的手机号码',
+              trigger: 'blur'
+            },
+          ],
           tbxxLrr: [{
             required: true,
             message: '请输入录入人',
@@ -276,7 +294,25 @@
             console.log(this.ruleForm);
             this.$post("/tbxx/tbxxAdd/" + JSON.stringify(this.ruleForm)).then(v => {
               console.log(v.data.info)
-              this.$message.success(v.data.info);
+              this.$message.success(v.data.info)
+              this.ruleForm = {
+                tbxxDate: '',
+                tbxxBh: '',
+                tbxxName: '',
+                tbxxJj: '',
+                tbxxDz: '',
+                tbxxXz: '',
+                tbxxLx: '',
+                tbxxFzr: '',
+                tbxxTbrq: '',
+                tbxxYjtbfy: '',
+                tbxxYjhtje: '',
+                tbxxJsdw: '',
+                tbxxLxr: '',
+                tbxxLxdh: '',
+                tbxxLrr: '',
+                tbxxSpjg: 0
+              }
             })
           } else {
             /* console.log('error 添加失败!!'); */

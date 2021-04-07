@@ -53,7 +53,7 @@
         <el-col :span="8">
           <el-form-item label="登记时间:" prop="zbjgdjDjsj">
             <el-date-picker v-model="ruleForm.zbjgdjDjsj" align="right" type="date" placeholder="选择日期"
-              :picker-options="pickerOptions">
+              :picker-options="pickerOptions" :disabled="true">
             </el-date-picker>
           </el-form-item>
         </el-col>
@@ -78,22 +78,20 @@
         }],
 
         rules: {
-          tbbzjsqXmmc: [{
+          zbjgdjXmmc: [{
             required: true,
             message: '请选择项目名称',
             trigger: 'blur'
           }, ],
-          tbbzjsqJkrq: [{
+          zbjgdjZbje: [{
             required: true,
-            message: '请输入招标文件费',
+            message: '请输入中标金额',
             trigger: 'blur'
-          }, ],
-          tbbzjsqYjthrq: [{
-            required: true,
-            message: '请输入招标文件费',
-            trigger: 'blur'
-          }, ],
-
+          },  {
+              pattern: /^\d+(\.\d+)?$/,
+              message: '请输入正确的金额',
+              trigger: 'blur'
+            },]
         },
 
         pickerOptions: {
@@ -152,6 +150,16 @@
             console.log(this.ruleForm);
             this.$post("/zbjgdj/add/" + JSON.stringify(this.ruleForm)).then(v => {
               this.$message.success("添加成功!");
+              this.ruleForm =  {
+                zbjgdjXmmc: '',
+                zbjgdjXmlx: '',
+                zbjgdjZbdw: '',
+                zbjgdjZbje: '',
+                zbjgdjDjr: '',
+                zbjgdjDjsj: '',
+                zbjgdjSplc: 0,
+                tbxxBh: ''
+              }
             })
           } else {
             /* console.log('error 添加失败!!'); */
@@ -168,6 +176,7 @@
         console.log(v.data);
         this.tbxx = v.data.content;
       });
+      this.ruleForm.zbjgdjDjsj = new Date();
     }
   }
 </script>

@@ -16,12 +16,16 @@
     <div>
       <template>
         <el-table :data="ruleForm" border style="width: 100%" >
-          <el-table-column prop="zbjgdjXmmc" label="项目名称" width="220"></el-table-column>
-         <el-table-column prop="zbjgdjXmlx" label="项目类型"width="320"></el-table-column>
-         <el-table-column prop="zbjgdjZbdw" label="中标单位" width="120"></el-table-column>
-         <el-table-column prop="zbjgdjZbje" label="中标金额" width="320"></el-table-column>
-         <el-table-column prop="zbjgdjDjr" label="登记人" width="120"></el-table-column>
-         <el-table-column prop="zbjgdjDjsj" label="登记时间" width="120"></el-table-column>
+          <el-table-column prop="zbjgdjXmmc" label="项目名称" width="320"></el-table-column>
+         <el-table-column prop="zbjgdjXmlx" label="项目类型"></el-table-column>
+         <el-table-column prop="zbjgdjZbdw" label="中标单位" width="220"></el-table-column>
+         <el-table-column prop="zbjgdjZbje" label="中标金额"></el-table-column>
+         <el-table-column prop="zbjgdjDjr" label="登记人"></el-table-column>
+         <el-table-column prop="zbjgdjDjsj" label="登记时间" width="120">
+           <template slot-scope="scope">
+             {{scope.row.zbjgdjDjsj|formatDate}}
+           </template>
+         </el-table-column>
 
          <el-table-column prop="zbjgdjSplc" label="流程状态" width="120">
           <template slot-scope="scope">
@@ -61,6 +65,8 @@
 
   import qs from 'qs'
 
+  import {formatDate} from '@/assets/utils';
+
   export default {
 
     name: 'test1',
@@ -72,10 +78,6 @@
         total: 20,
         //每页显示记录
         pagesize: 20,
-
-
-
-
         scyh: '', //模糊搜索员工
         value1: null, //模糊搜索时间
 
@@ -91,6 +93,12 @@
           tbxxBh: ''
         },]
 
+      }
+    },
+    filters: {
+      formatDate(time) {
+        var date = new Date(time);
+        return formatDate(date, "yyyy-MM-dd");
       }
     },
     methods: {

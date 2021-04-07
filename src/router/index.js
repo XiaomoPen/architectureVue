@@ -140,7 +140,8 @@ const router = new Router({
       },{
         path: '/xmywfsqlb',
         component: xmywfsqlb
-      }]
+      },{path: '/equipment/requisition', component: () => import('../components/equipment/requisition.vue')},
+        {path: '/equipment/requisitionList', component: () => import('../components/equipment/requisitionList.vue')},]
     },{
       path: '/cCustomer',
         component:cCustomer,
@@ -178,22 +179,13 @@ const router = new Router({
         },{
           path: '/wdkh',
           component: wdkh
-        }],
-        components: {
-          default: cCustomer
-        }
-    }, {
-      },{
+        },]
+    },{
       path: '/cPersonal',
-      components: {
-        default: cPersonal
-      }
+      component:cPersonal
     },{
       path: '/cMatters',
-      components: {
-        default: cMatters
-      }
-
+      component:cMatters
     }]
   }],
   mode:'history'//去掉地址中的#号

@@ -98,7 +98,11 @@
             required: true,
             message: '请输入招标文件费',
             trigger: 'blur'
-          }, ],
+          }, {
+              pattern: /^\d+(\.\d+)?$/,
+              message: '请输入正确的金额',
+              trigger: 'blur'
+            },],
 
 
         },
@@ -162,6 +166,18 @@
             console.log(this.ruleForm);
             this.$post("/zbwj/zbwjAdd/" + JSON.stringify(this.ruleForm)).then(v => {
               this.$message.success("添加成功!");
+              this.ruleForm= {
+                zbwjGmrq: '',
+                zbwjBsgmbh: '',
+                zbwjSmmc: '',
+                zbwjXmlx: '',
+                zbwjJsdw: '',
+                zbwjZbwjf: '',
+                zbwjSqr: '江小北',
+                zbwjBz: '',
+                zbwjSpjg: 0,
+                tbxxBh: '',
+              }
             })
           } else {
             /* console.log('error 添加失败!!'); */

@@ -131,13 +131,16 @@
             required: true,
             message: '请输入保证金额',
             trigger: 'blur'
-          }, ],
+          }, {
+              pattern: /^\d+(\.\d+)?$/,
+              message: '请输入正确的金额',
+              trigger: 'blur'
+            },],
           tbbzjsqYjthrq: [{
             required: true,
             message: '请选择预计退回日期',
             trigger: 'blur'
           }, ],
-
         },
 
         pickerOptions: {
@@ -201,6 +204,21 @@
             console.log(this.ruleForm);
             this.$post("/tbbzj/add/" + JSON.stringify(this.ruleForm)).then(v => {
               this.$message.success("添加成功!");
+              this.ruleForm= {
+                tbbzjsqBh: '',
+                tbbzjsqXmmc: '',
+                tbbzjsqXmlx: '',
+                tbbzjsqSqdw: '',
+                tbbzjsqKhh: '',
+                tbbzjsqZh: '',
+                tbbzjsqBzjje: 0,
+                tbbzjsqJkrq: '',
+                tbbzjsqYjthrq: '',
+                tbbzjsqSqr: '江小北',
+                tbbzjsqBz: '',
+                tbbzjsqSpjg: 0,
+                tbxxBh: ''
+              }
             })
           } else {
             /* console.log('error 添加失败!!'); */

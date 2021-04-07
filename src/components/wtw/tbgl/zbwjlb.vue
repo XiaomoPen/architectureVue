@@ -21,11 +21,15 @@
       <template>
         <el-table :data="ruleForm" border style="width: 100%">
           <el-table-column prop="zbwjBsgmbh" label="标书购买编号"></el-table-column>
-          <el-table-column prop="zbwjSmmc" label="项目名称"></el-table-column>
+          <el-table-column prop="zbwjSmmc" label="项目名称" width="320px"></el-table-column>
           <el-table-column prop="zbwjXmlx" label="项目类型"></el-table-column>
           <el-table-column prop="zbwjJsdw" label="建设单位"></el-table-column>
           <el-table-column prop="zbwjSqr" label="申请人"></el-table-column>
-          <el-table-column prop="zbwjGmrq" label="日期"></el-table-column>
+          <el-table-column prop="zbwjGmrq" label="日期">
+            <template slot-scope="scope">
+              {{scope.row.zbwjGmrq|formatDate}}
+            </template>
+          </el-table-column>
           <el-table-column prop="zbwjZbwjf" label="招标文件费"></el-table-column>
           <el-table-column prop="zbwjSpjg" label="流程状态">
             <template slot-scope="scope">
@@ -65,6 +69,8 @@
 
   import qs from 'qs'
 
+  import {formatDate} from '@/assets/utils';
+
   export default {
 
     name: 'test1',
@@ -76,10 +82,6 @@
         total: 20,
         //每页显示记录
         pagesize: 20,
-
-
-
-
         scyh: '', //模糊搜索员工
         value1: null, //模糊搜索时间
 
@@ -97,6 +99,12 @@
           tbxxBh: '',
         }, ],
 
+      }
+    },
+    filters: {
+      formatDate(time) {
+        var date = new Date(time);
+        return formatDate(date, "yyyy-MM-dd");
       }
     },
     methods: {
