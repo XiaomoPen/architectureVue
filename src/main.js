@@ -6,6 +6,7 @@ import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import axios from 'axios'
+import {get, post, del} from '../api/axios'
 
 Vue.use(ElementUI)
 // Vue.config.productionTip = false
@@ -15,6 +16,9 @@ axios.defaults.baseURL = "http://localhost:7777"
 import qs from 'qs';
 //导入通用的axios对象
 Vue.prototype.$axios = axios
+Vue.prototype.$get = get
+Vue.prototype.$post = post
+Vue.prototype.$del = del
 
 Vue.prototype.qs = qs
 // Vue.prototype.$post = post
