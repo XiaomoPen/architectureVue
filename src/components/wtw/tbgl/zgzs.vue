@@ -147,6 +147,17 @@
             console.log(this.ruleForm);
             this.$post("/zgzs/add/" + JSON.stringify(this.ruleForm)).then(v => {
               this.$message.success("添加成功!");
+              this.ruleForm={
+                zgzsRq: '',
+                zgzsZsbh: '',
+                zgzsXmmc: '',
+                zgzsXmlx: '',
+                zgzsJsdw: '',
+                zgzsSqr: '',
+                zgzsBz: '',
+                zgzsSpjg: 0,
+                tbxxBh: '',
+              }
             })
           } else {
             /* console.log('error 添加失败!!'); */

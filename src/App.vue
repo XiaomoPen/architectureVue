@@ -27,6 +27,7 @@
     width: 100%;
     height: 100%;
     position: absolute;
+    background-color: #f6f8fa;
   }
 
   ::-webkit-scrollbar {
@@ -39,7 +40,7 @@
     justify-content: center;
     align-items: center;
     color: white;
-    background-color: #fcb243;
+    background-color: #409EFF;
     font-size: 32px;
     border-radius: 50%;
     margin-top: 20px;
@@ -53,7 +54,6 @@
     width: 100%;
     text-align: center;
     margin: 6px 0;
-    color: white;
     font-size: 14px;
   }
 </style>

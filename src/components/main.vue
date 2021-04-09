@@ -21,11 +21,12 @@
 <template>
   <div class="main">
     <el-container style="width: 100%;height: 100%;position: absolute;">
-      <el-header style="background-color: #409EFF;width: 100%;height: 10%;position: relative;">
+      <el-header style="background-color: #24292e;width: 100%;height: 10%;position: relative;">
         <ul class="headerUl">
           <li @click="$router.push('/cProject')">项目管理</li>
           <li @click="$router.push('/cPersonal')">个人</li>
-          <li @click="$router.push('/cMatters')">人事</li>
+          <!-- <li @click="$router.push('/cMatters')">人事</li> -->
+          <li>人事</li>
           <li @click="$router.push('/cCustomer')">客户</li>
         </ul>
       </el-header>
@@ -35,21 +36,5 @@
 </template>
 
 <script>
-  export default {
-    data: function() {
-      return {
-        address: 'clzjh',
-        isRouterAlive: true
-      }
-    },
-    methods: {
-
-    },
-    created() {
-      this.$root.myEvent.$on("pushAddress", function(msg) {
-        this.address=msg;
-        console.log(this.address);
-      });
-    }
-  }
+ 
 </script>

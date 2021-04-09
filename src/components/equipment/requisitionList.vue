@@ -182,13 +182,31 @@ export default {
       this.disable = this.multipleSelection.length === 0;
     },
     deleteTheEquipmentRecord() {
-      let ids = [];
-      this.multipleSelection.forEach(v => {
-        ids.push(v.receiveDrawingNumber)
-      })
-      this.$del('/requisition/delRequisitionById', {id: ids}).then(r => {
-        this.initialRequisitionEquipmentList(this.pageNum, this.pageSize)
-      })
+      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        center: true
+      }).then(() => {
+        let ids = [];
+        this.multipleSelection.forEach(v => {
+          ids.push(v.receiveDrawingNumber)
+        })
+        this.$del('/requisition/delRequisitionById', {id: ids}).then(r => {
+          this.initialRequisitionEquipmentList(this.pageNum, this.pageSize)
+          if (r.data.code === 200) {
+            this.$message.success("删除成功")
+          }
+        }).catch(r => {
+          this.$message.error("删除失败")
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
+
     },
     initialRequisitionEquipmentList(page, limit) {
       this.queryConditions.page = page;
@@ -199,7 +217,6 @@ export default {
       this.queryConditions.endOfApplicationDate = this.applicationDate[1];
 
       this.$post('requisition/findReceiveAll', this.queryConditions).then(r => {
-          console.log(r.data)
           this.requisitionListData = r.data.data.list;
           this.total = r.data.data.total
           this.pageNum = r.data.data.pageNum;
@@ -227,18 +244,20 @@ export default {
       console.log(`当前第${val}页`)
       this.initialRequisitionEquipmentList(val, this.pageSize)
     },
-  },
+  }
+  ,
   created() {
     this.initialRequisitionEquipmentList();
-  },
-  // watch: {
-  //   multipleSelection: {
-  //     handler(newVal) {
-  //       console.log(newVal)
-  //     },
-  //     deep:true
-  //   }
-  // }
+  }
+  ,
+// watch: {
+//   multipleSelection: {
+//     handler(newVal) {
+//       console.log(newVal)
+//     },
+//     deep:true
+//   }
+// }
 }
 </script>
 

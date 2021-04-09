@@ -176,6 +176,20 @@
             console.log(this.ruleForm);
             this.$post("/xmkc/add/" + JSON.stringify(this.ruleForm)).then(v => {
               this.$message.success("添加成功!");
+              this.ruleForm = {
+                xmkcRq: '',
+                xmkcBh: '',
+                xmkcXmmc: '',
+                xmkcCmlx: '',
+                xmkcJsdw: '',
+                xmkcCyry: '',
+                xmkcSqr: '江小北',
+                xmkcKcqk: '',
+                xmkcBz: '',
+                xmkcSpjg: 0,
+                tbxxBh:'',
+                userNumber:''
+              }
             })
           } else {
             /* console.log('error 添加失败!!'); */

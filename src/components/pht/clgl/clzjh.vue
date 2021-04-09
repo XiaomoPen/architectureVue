@@ -158,7 +158,11 @@
       },
       //删除材料明细
       delPlansDetailds(scope){
-        this.tableData.splice(scope.$index,1);
+        this.$confirm('确认删除？')
+          .then(_ => {
+            this.tableData.splice(scope.$index,1);
+          })
+          .catch(_ => {});
       },
       //提交
       push(){

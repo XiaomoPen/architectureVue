@@ -105,7 +105,11 @@
             required: true,
             message: '请输入投标金额',
             trigger: 'blur'
-          }, ],
+          }, {
+              pattern: /^\d+(\.\d+)?$/,
+              message: '请输入正确的金额',
+              trigger: 'blur'
+            },],
         },
 
         pickerOptions: {
@@ -166,6 +170,18 @@
             console.log(this.ruleForm);
             this.$post("/tbwjsc/add/" + JSON.stringify(this.ruleForm)).then(v => {
               this.$message.success("添加成功!");
+              this.ruleForm={
+                tbwjscRq: '',
+                thwjscTbbh: '',
+                tbwjscXmmc: '',
+                tbwjscXmlx: '',
+                tbwjscJsdw: '',
+                tbwjscTbje: '',
+                tbwjscSqr: '',
+                tbwjscTbnr: '',
+                tbwjscSpjg: 0,
+                tbxxBh: '',
+              }
             })
           } else {
             /* console.log('error 添加失败!!'); */

@@ -4,16 +4,17 @@
 <template>
   <div>
     <el-container  style="height: 90%;width: 100%;position: absolute;">
-      <el-aside width="240px" style="background-color: #8cc5ff;">
+      <el-aside width="240px" style="background-color: #f6f8fa;">
         <div class="headerImg">晓陌</div>
         <ul class="containerInfor">
           <li>部门：总经办</li>
           <li>职位：总经理</li>
         </ul>
-        <el-menu class="el-menu-vertical-demo" background-color="#4791eb" text-color="#fff"
-          active-text-color="#ffd04b" :unique-opened="true">
+        <el-menu class="el-menu-vertical-demo" active-text-color="#409EFF"
+          :unique-opened="true" background-color="#f6f8fa">
           <el-submenu index="1">
             <template slot="title">
+              <i class="el-icon-location-information"></i>
               <span>客户管理</span>
             </template>
             <el-submenu index="1-1">
@@ -53,9 +54,8 @@
           </el-submenu>
         </el-menu>
       </el-aside>
-      <el-main>
-
-        <router-view></router-view>
+      <el-main style="background-color: white;">
+        <router-view style="border: 1px solid #ebecf0;padding: 18px;box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)"></router-view>
       </el-main>
     </el-container>
   </div>

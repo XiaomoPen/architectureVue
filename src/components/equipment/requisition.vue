@@ -199,8 +199,28 @@ export default {
     },
     preserve() {
       if (this.equipmentRequisitionData.equipmentCategoryNumber !== '' && this.equipmentRequisitionData.departmentNumber !== '' && this.equipmentRequisitionData.userNumber !== '' && this.equipmentRequisitionData.lxxxdjBh !== '') {
-        this.$put('/requisition/addRequisitionApplication', this.equipmentRequisitionData).then(r => {
-          console.log(r.data)
+        this.$post('/requisition/addRequisitionApplication', this.equipmentRequisitionData).then(r => {
+          if (r.data.code === 200) {
+            this.$message.success("新增成功")
+            this. equipmentRequisitionData={
+        receiveDateOfService: new Date(),
+        equipmentName: '',
+        equipmentCategoryNumber: '',
+        receiveModelNumber: '',
+        receiveCompany: '',
+        receiveApplicationDate: '',
+        receiveTypeOfUse: '',
+        departmentNumber: '101',
+        userNumber: '20210405',
+        receiveDuration: '',
+        receiveUrgency: '',
+        receiveReason: '',
+        receiveRequire: '',
+        lxxxdjBh: '2021040001',
+      };
+          }
+        }).catch(r => {
+          this.$message.error("新增失败")
         })
       } else {
         this.$message('请将必填项填写完成！')
@@ -212,4 +232,3 @@ export default {
 <style scoped>
 @import "../../../static/css/equipment.css";
 </style>
-

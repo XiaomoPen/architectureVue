@@ -38,7 +38,7 @@
         </el-col>
         <el-col :span="8">
           <el-form-item label="合同编号:">
-            <el-input placeholder="添加后自动生成"  v-model="contract.contractNumber" :disabled="true">
+            <el-input placeholder="添加后自动生成" v-model="contract.contractNumber" :disabled="true">
             </el-input>
           </el-form-item>
         </el-col>
@@ -269,8 +269,8 @@
             return time.getTime() < Date.now() - 8.64e7;
           },
         },
-        isAdd:true,
-        pid:this.$route.query.data,
+        isAdd: true,
+        pid: this.$route.query.data,
         tbxxDate: "",
         drawer: false,
         isRequired: true,
@@ -352,6 +352,7 @@
     methods: {
       // 添加材料合同
       addPlansDetailds() {
+        this.clcrkmx.clcrkmxName+="";
         if (this.clcrkmx.clcrkmxName.length == 0) {
           this.$message({
             showClose: true,
@@ -360,6 +361,7 @@
           });
           return;
         }
+        this.purNum+="";
         if (this.purNum == 0 || this.purNum < 0 || this.purNum.substring("-") == -1 || this.purNum.substring(".") == -
           1) {
           this.$message({
@@ -369,6 +371,7 @@
           });
           return;
         }
+        this.purPrice+="";
         if (this.purPrice == 0 || this.purPrice < 0 || this.purPrice.substring("-") == -1) {
           this.$message({
             showClose: true,
@@ -404,10 +407,15 @@
       },
       //删除材料明细
       delPlansDetailds(scope) {
-        this.tableData.splice(scope.$index, 1);
+        this.$confirm('确认删除？')
+          .then(_ => {
+            this.tableData.splice(scope.$index, 1);
+          })
+          .catch(_ => {});
       },
       //提交
       push() {
+        this.contractDetailed.contractName+="";
         if (this.contractDetailed.contractName.length == 0) {
           this.$message({
             showClose: true,
@@ -416,6 +424,7 @@
           });
           return;
         }
+        this.contract.lxxxdjBh+="";
         if (this.contract.lxxxdjBh.length == 0) {
           this.$message({
             showClose: true,
@@ -424,6 +433,7 @@
           });
           return;
         }
+        this.contract.planNumber+="";
         if (this.contract.planNumber.length == 0) {
           this.$message({
             showClose: true,
@@ -432,6 +442,7 @@
           });
           return;
         }
+        this.contract.gysBh+="";
         if (this.contract.gysBh.length == 0) {
           this.$message({
             showClose: true,
@@ -440,7 +451,8 @@
           });
           return;
         }
-        if (this.contractDetailed.contractMoney.substring("-") == -1) {
+        this.contractDetailed.contractMoney+="";
+        if (this.contractDetailed.contractMoney.length==0||this.contractDetailed.contractMoney.substring("-") == -1) {
           this.$message({
             showClose: true,
             message: '合同金额不能为负数',
@@ -448,14 +460,16 @@
           });
           return;
         }
-        if (this.contractDetailed.contractAdvanceCharge.substring("-") == -1) {
+        this.contractDetailed.contractAdvanceCharge+="";
+        if (this.contractDetailed.contractAdvanceCharge.length==0||this.contractDetailed.contractAdvanceCharge.substring("-") == -1) {
           this.$message({
             showClose: true,
-            message: '预付款不能为负数',
+            message: '预付款不能为空且不能为负数',
             type: 'warning'
           });
           return;
         }
+        this.contractDetailed.contractbond+="";
         if (this.contractDetailed.contractbond.substring("-") == -1) {
           this.$message({
             showClose: true,
@@ -503,15 +517,15 @@
               contractMask: "",
             }
             this.tableData = [];
-            this.sourceType="";
+            this.sourceType = "";
           }
         });
       }
     },
     created() {
       this.tbxxDate = new Date();
-      if(this.pid==undefined){
-        this.isAdd=true;
+      if (this.pid == undefined) {
+        this.isAdd = true;
         this.$axios.get("/lxxx/queryAll").then(res => {
           if (res.data.state == 200) {
             this.projects = res.data.content;
@@ -550,18 +564,18 @@
             this.gys = res.data.content;
           }
         });
-      }else{
-        this.isAdd=false;
-        this.loading=true;
-        this.$axios.get("/material/getMCvo/"+this.pid).then(res => {
-          this.loading=false;
+      } else {
+        this.isAdd = false;
+        this.loading = true;
+        this.$axios.get("/material/getMCvo/" + this.pid).then(res => {
+          this.loading = false;
           if (res.data.state == 200) {
-            var data=res.data.content;
-            this.contract=data.contract;
-            this.contractDetailed=data.detailed;
-            this.tableData=data.clcrkmxs;
-            if(this.tableData==undefined||this.tableData.length==0){
-               this.tableData.push({});
+            var data = res.data.content;
+            this.contract = data.contract;
+            this.contractDetailed = data.detailed;
+            this.tableData = data.clcrkmxs;
+            if (this.tableData == undefined || this.tableData.length == 0) {
+              this.tableData.push({});
             }
           }
         });

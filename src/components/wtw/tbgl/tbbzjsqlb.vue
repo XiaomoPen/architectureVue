@@ -3,7 +3,7 @@
     <div>
       <el-row :gutter="10">
         <el-col :span="2">
-          <el-button :gutter="0" type="primary" plain>新增</el-button>
+          <el-button :gutter="0" type="primary" @click="$router.push('/tbbzjsq')" plain>新增</el-button>
         </el-col>
         <el-col :span="5">
           <el-input placeholder="请输入客户名称或负责人名称" v-model="scyh" clearable>
@@ -20,16 +20,24 @@
     <div>
       <template>
         <el-table :data="ruleForm" border style="width: 100%" >
-         <el-table-column prop="tbbzjsqBh" label="保证金编号"></el-table-column>
-         <el-table-column prop="tbbzjsqXmmc" label="项目名称"></el-table-column>
+         <el-table-column prop="tbbzjsqBh" label="保证金编号" width="180"></el-table-column>
+         <el-table-column prop="tbbzjsqXmmc" label="项目名称" width="320"></el-table-column>
          <el-table-column prop="tbbzjsqXmlx" label="项目类型"></el-table-column>
-         <el-table-column prop="tbbzjsqSqdw" label="收取单位"></el-table-column>
-         <el-table-column prop="tbbzjsqKhh" label="开户行"></el-table-column>
-         <el-table-column prop="tbbzjsqZh" label="账号"></el-table-column>
+         <el-table-column prop="tbbzjsqSqdw" label="收取单位" width="180"></el-table-column>
+         <el-table-column prop="tbbzjsqKhh" label="开户行" width="260"></el-table-column>
+         <el-table-column prop="tbbzjsqZh" label="账号" width="220"></el-table-column>
          <el-table-column prop="tbbzjsqBzjje" label="保证金金额"</el-table-column>
          <el-table-column prop="tbbzjsqSqr" label="申请人"></el-table-column>
-         <el-table-column prop="tbbzjsqJkrq" label="交款日期"></el-table-column>
-         <el-table-column prop="tbbzjsqYjthrq" label="预计退回日期"></el-table-column>
+         <el-table-column prop="tbbzjsqJkrq" label="交款日期" width="150">
+           <template slot-scope="scope">
+             {{scope.row.tbbzjsqJkrq|formatDate}}
+           </template>
+         </el-table-column>
+         <el-table-column prop="tbbzjsqYjthrq" label="预计退回日期" width="150">
+           <template slot-scope="scope">
+             {{scope.row.tbbzjsqYjthrq|formatDate}}
+           </template>
+         </el-table-column>
          <el-table-column prop="tbbzjsqSpjg" label="流程状态">
           <template slot-scope="scope">
             <span v-if="scope.row.tbbzjsqSpjg==0">未提交</span>
@@ -56,9 +64,9 @@
       </template>
 
       <!-- 分页区域 -->
-      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
+      <!-- <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
         :page-sizes="[5,10,15,20]" :page-size="pagesize" layout="total, sizes, prev, pager, next, jumper"
-        :total="total"></el-pagination>
+        :total="total"></el-pagination> -->
     </div>
   </div>
 </template>
@@ -67,6 +75,8 @@
   import axios from 'axios'
 
   import qs from 'qs'
+
+  import {formatDate} from '@/assets/utils';
 
   export default {
 
@@ -79,10 +89,6 @@
         total: 20,
         //每页显示记录
         pagesize: 20,
-
-
-
-
         scyh: '', //模糊搜索员工
         value1: null, //模糊搜索时间
 
@@ -105,6 +111,12 @@
 
       }
     },
+    filters: {
+      formatDate(time) {
+        var date = new Date(time);
+        return formatDate(date, "yyyy-MM-dd");
+      }
+    },
     methods: {
       handleClick(row) {
         console.log(row);
@@ -125,28 +137,45 @@
         });
       },
       deletes(val) {
-        this.$post("/tbbzj/deletes/" + JSON.stringify(val)).then(v => {
-          this.queryAll();
-          this.$message.success("删除成功");
-        })
+        this.$confirm('确认删除？')
+          .then(_ => {
+            this.$post("/tbbzj/deletes/" + JSON.stringify(val)).then(v => {
+              this.queryAll();
+              this.$message.success("删除成功");
+            })
+          })
+          .catch(_ => {});
+
       },
       updates(val) {
-        this.$get("/tbbzj/updates/" + JSON.stringify(val)).then(v => {
-          this.queryAll();
-          this.$message.success("提交审批成功");
-        })
+        this.$confirm('确认审批操作？')
+          .then(_ => {
+            this.$get("/tbbzj/updates/" + JSON.stringify(val)).then(v => {
+              this.queryAll();
+              this.$message.success("提交审批成功");
+            })
+          })
+          .catch(_ => {});
       },
       updates1(val) {
-        this.$get("/tbbzj/updates1/" + JSON.stringify(val)).then(v => {
-          this.queryAll();
-          this.$message.success("提交审批成功");
-        })
+        this.$confirm('确认审批操作？')
+          .then(_ => {
+            this.$get("/tbbzj/updates1/" + JSON.stringify(val)).then(v => {
+              this.queryAll();
+              this.$message.success("提交审批成功");
+            })
+          })
+          .catch(_ => {});
       },
       updates2(val) {
-        this.$get("/tbbzj/updates2/" + JSON.stringify(val)).then(v => {
-          this.queryAll();
-          this.$message.success("提交审批成功");
-        })
+        this.$confirm('确认审批操作？')
+          .then(_ => {
+            this.$get("/tbbzj/updates2/" + JSON.stringify(val)).then(v => {
+              this.queryAll();
+              this.$message.success("提交审批成功");
+            })
+          })
+          .catch(_ => {});
       },
       selects(val) {
         this.$get("/tbbzj/selects/" + JSON.stringify(val)).then(v => {

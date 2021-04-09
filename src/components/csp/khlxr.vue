@@ -2,14 +2,14 @@
   <div>
     <div>
       <el-row>
-        <el-button :gutter="0" type="primary" plain>新增</el-button>
-        <el-button :gutter="0" type="primary" plain>修改</el-button>
+        <el-button :gutter="0" type="primary" @click="$router.push('/khlxrf')" plain>新增</el-button>
+        <!-- <el-button :gutter="0" type="primary" plain>修改</el-button>
         <el-button :gutter="0" type="primary" plain>删除</el-button>
         <el-button :gutter="0" type="primary" plain>过滤</el-button>
         <el-button :gutter="0" type="primary" plain>还原</el-button>
         <el-button :gutter="0" type="primary" plain>打印</el-button>
         <el-button :gutter="0" type="primary" plain>导入</el-button>
-        <el-button :gutter="0" type="primary" plain>导出</el-button>
+        <el-button :gutter="0" type="primary" plain>导出</el-button> -->
       </el-row>
     </div>
     <div>
@@ -30,24 +30,26 @@
       <el-table border max-height="700" stripe :data="lxr">
         <!-- <el-table-column type="selection" width="60"> ></el-table-column> -->
         <!-- ref="multipleTable" @selection-change="handleSelectionChange" -->
-        <el-table-column prop="khxx_bh" label="客户编号"></el-table-column>
-        <el-table-column prop="khxx_xm" label="客户姓名"></el-table-column>
-        <el-table-column prop="lxr_xm" label="联系人姓名"></el-table-column>
-        <el-table-column prop="lxr_dh" label="联系人电话" width="200px"></el-table-column>
-        <el-table-column prop="lxr_zw" label="联系人职位"></el-table-column>
-        <el-table-column prop="lxr_yxl" label="联系人影响力"></el-table-column>
-        <el-table-column prop="lxr_zt" label="联系人状态"></el-table-column>
+        <el-table-column prop="lxrBh" label="客户编号"></el-table-column>
+        <el-table-column prop="khxxXm" label="客户姓名"></el-table-column>
+        <el-table-column prop="lxrXm" label="联系人姓名"></el-table-column>
+        <el-table-column prop="lxrDh" label="联系人电话" width="200px"></el-table-column>
+        <el-table-column prop="lxrZw" label="联系人职位"></el-table-column>
+        <el-table-column prop="lxrYxl" label="联系人影响力"></el-table-column>
+        <el-table-column prop="lxrZt" label="联系人状态"></el-table-column>
         <el-table-column prop="cz" label="操作" width="200px" fixed="right">
-          <el-button type="primary" icon="el-icon-edit" size="mini" plain @click="tz(scope.row)">编辑</el-button>
-          <el-button type="danger" icon="el-icon-delete" size="mini" plain>删除</el-button>
+          <template slot-scope="scope">
+            <el-button type="primary" icon="el-icon-edit" size="mini" plain >编辑</el-button>
+            <el-button type="danger" icon="el-icon-delete" size="mini" @click="sclxr(scope.row)" plain>删除</el-button>
+          </template>
         </el-table-column>
         <!-- <el-table-column prop="ygjcxxSj" label="手机号"></el-table-column> -->
 
       </el-table>
       <!-- 分页区域 -->
-      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
+      <!-- <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
         :page-sizes="[5,10,15,20]" :page-size="pagesize" layout="total, sizes, prev, pager, next, jumper"
-        :total="total"></el-pagination>
+        :total="total"></el-pagination> -->
     </div>
   </div>
 </template>
@@ -72,27 +74,17 @@
         scyh: '', //模糊搜索员工
         value1: null, //模糊搜索时间
         lxr: [{
-            khxx_bh: '客户编号11',
-            khxx_xm: '客户姓名11',
-            lxr_xm: '联系人姓名11',
-            lxr_dh: '联系人电话11',
-            lxr_zw: '联系人职位11',
-            lxr_yxl: '联系人影响力11',
-            lxr_zt: '联系人状态11',
+            lxrBh: '',
+            khxxBh:'',
+            khxxXm: '',
+            lxrXm: '',
+            lxrDh: '',
+            lxrZw: '',
+            lxrYxl: '',
+            lxrZt: '',
           },
-          {
-            khxx_bh: '客户编号22',
-            khxx_xm: '客户姓名22',
-            lxr_xm: '联系人姓名22',
-            lxr_dh: '联系人电话22',
-            lxr_zw: '联系人职位22',
-            lxr_yxl: '联系人影响力22',
-            lxr_zt: '联系人状态22',
-          }
         ],
         /* multipleSelection: [], */
-
-
       }
     },
     methods: {
@@ -104,6 +96,25 @@
       handleCurrentChange(val) {
         console.log(`当前页: ${val}`);
         /* this.mhsc(val); */
+      },
+      queryAll(){
+        this.$get("/lxr/queryAll").then(v => {
+          console.log(v.data);
+          this.lxr = v.data.content;
+        });
+      },
+      //删除信息
+      sclxr: function(row) {
+        this.$confirm('确认删除？')
+          .then(_ => {
+            /* alert(row.khxxBh) */
+            this.$get("/lxr/dellxr/"+ JSON.stringify(row.lxrBh)).then(v => {
+              console.log(v.data);
+              this.lxr = v.data.content;
+              this.$message.success("修改成功!");
+            });
+          })
+          .catch(_ => {});
       },
       /* toggleSelection(rows) {
         if (rows) {
@@ -117,7 +128,9 @@
       handleSelectionChange(val) {
         this.multipleSelection = val;
       } */
-
+    },
+    created: function() {
+      this.queryAll();
     }
 
   }

@@ -19,7 +19,7 @@
 </style>
 <template>
   <div>
-    <el-form :inline="true" ref="ruleForm" :model="ruleForm" label-width="120px" class="demo-form-inline">
+    <el-form :inline="true" ref="ruleForm" :model="ruleForm" :rules="rules" label-width="120px" class="demo-form-inline">
       <el-row>
         <el-col :span="24">
           <el-form-item>
@@ -52,8 +52,10 @@
         </el-col>
         <el-col :span="8">
           <el-form-item label="项目名称:" prop="kbdjXmmc">
-            <el-input v-model="ruleForm.kbdjXmmc">
-            </el-input>
+            <el-select v-model="ruleForm.kbdjXmmc" placeholder="请选择">
+              <el-option v-for="item in tbxx" :key="item.tbxxId" :label="item.tbxxName" :value="item.tbxxName">
+              </el-option>
+            </el-select>
           </el-form-item>
         </el-col>
         <el-col :span="8">
@@ -161,6 +163,42 @@
           kbdjBz: '',
           kbdjSpjg: 0
         },
+        tbxx: {
+          tbxxDate: '',
+          tbxxBh: '',
+          tbxxName: '',
+          tbxxJj: '',
+          tbxxDz: '',
+          tbxxXz: '',
+          tbxxLx: '',
+          tbxxFzr: '',
+          tbxxTbrq: '',
+          tbxxYjtbfy: '',
+          tbxxYjhtje: '',
+          tbxxJsdw: '',
+          tbxxLxr: '',
+          tbxxLxdh: '',
+          tbxxLrr: '',
+          tbxxSpjg: 0
+        },
+        rules: {
+          kbdjXmmc: [{
+            required: true,
+            message: '请选择项目名称',
+            trigger: 'blur'
+          }, ],
+          kbdjKbsj: [{
+            required: true,
+            message: '请输入开标时间',
+            trigger: 'blur'
+          }],
+          kbdjKbdd: [{
+            required: true,
+            message: '请选择开标地点',
+            trigger: 'blur'
+          }, ],
+
+        },
         plansDetailds: {
           jzdsmxGsmc: "",
           jzdsmxTbbj: "",
@@ -227,15 +265,29 @@
         };
         this.loading = true;
         this.$axios.post("/kbdj/dataVo", data).then(res => {
-          // this.loading = false;
-          // if (res.data.state == 200) {
-          //   this.$message({
-          //     showClose: true,
-          //     message: '数据添加成功',
-          //     type: 'success'
-          //   });
-          //   this.tableData = [];
-          // }
+          this.loading = false;
+          if (res.data.state == 200) {
+            this.$message({
+              showClose: true,
+              message: '数据添加成功',
+              type: 'success'
+            });
+            this.tableData = [];
+            this.ruleForm = {
+              kbdjRq: '',
+              kbdjBh: '',
+              kbdjXmmc: '',
+              kbdjXmlx: '',
+              kbdjKbsj: '',
+              kbdjKbdd: '',
+              kbdjLbjg: 0.01,
+              kbdjPbjzz: 0.02,
+              kbdjYzbr: '',
+              kbdjLrr: '',
+              kbdjBz: '',
+              kbdjSpjg: 0
+            }
+          }
         });
       }
     },
@@ -251,6 +303,10 @@
             type: 'warning'
           });
         }
+      });
+      this.$get("/tbxx/queryAll").then(v => {
+        console.log(v.data);
+        this.tbxx = v.data.content;
       });
     }
   }

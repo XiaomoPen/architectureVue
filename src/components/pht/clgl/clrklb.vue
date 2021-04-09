@@ -113,54 +113,68 @@
       },
       //提交审批
       submit(scope) {
-        this.loading = true;
-        this.$axios.post("/clcrl/upClcrt/1/" + scope.row.clcrkNumber).then(v => {
-          this.loading = false;
-          if (v.data.state == 200) {
-            var index = scope.$index;
-            this.tableDate[index].clcrkApproval = '未审批';
-          } else {
-            this.$message({
-              showClose: true,
-              message: '提交审批失败',
-              type: 'warning'
-            });
-          }
-        })
+        this.$confirm('是否需要提交该审批？')
+          .then(_ => {
+            this.loading = true;
+            this.$axios.post("/clcrl/upClcrt/1/" + scope.row.clcrkNumber).then(v => {
+              this.loading = false;
+              if (v.data.state == 200) {
+                var index = scope.$index;
+                this.tableDate[index].clcrkApproval = '未审批';
+              } else {
+                this.$message({
+                  showClose: true,
+                  message: '提交审批失败',
+                  type: 'warning'
+                });
+              }
+            })
+          })
+          .catch(_ => {});
       },
       //同意审批
       sure(scope) {
-        this.loading = true;
-        this.$axios.post("/clcrl/upClcrt/2/" + scope.row.clcrkNumber).then(v => {
-          this.loading = false;
-          if (v.data.state == 200) {
-            var index = scope.$index;
-            this.tableDate[index].clcrkApproval = '未审批';
-          } else {
-            this.$message({
-              showClose: true,
-              message: '提交审批失败',
-              type: 'warning'
-            });
-          }
-        })
+        this.$confirm('是否同意该审批？')
+          .then(_ => {
+            this.loading = true;
+            this.$axios.post("/clcrl/upClcrt/2/" + scope.row.clcrkNumber).then(v => {
+              this.loading = false;
+              if (v.data.state == 200) {
+                var index = scope.$index;
+                this.tableDate[index].clcrkApproval = '未审批';
+              } else {
+                this.$message({
+                  showClose: true,
+                  message: '提交审批失败',
+                  type: 'warning'
+                });
+              }
+            })
+          })
+          .catch(_ => {});
+        
       },
       //不同意审批
       nosure(scope) {
-        this.loading = true;
-        this.$axios.post("/clcrl/upClcrt/3/" + scope.row.clcrkNumber).then(v => {
-          this.loading = false;
-          if (v.data.state == 200) {
-            var index = scope.$index;
-            this.tableDate[index].clcrkApproval = '未审批';
-          } else {
-            this.$message({
-              showClose: true,
-              message: '提交审批失败',
-              type: 'warning'
-            });
-          }
-        })
+        this.$confirm('是否不同意该审批？')
+          .then(_ => {
+            this.loading = true;
+            this.$axios.post("/clcrl/upClcrt/3/" + scope.row.clcrkNumber).then(v => {
+              this.loading = false;
+              if (v.data.state == 200) {
+                var index = scope.$index;
+                this.tableDate[index].clcrkApproval = '未审批';
+              } else {
+                this.$message({
+                  showClose: true,
+                  message: '提交审批失败',
+                  type: 'warning'
+                });
+              }
+            })
+          })
+          .catch(_ => {});
+        
       },
       handleClick(row) {
         console.log(row);

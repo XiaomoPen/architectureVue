@@ -98,55 +98,71 @@
       },
       //提交审批
       submit(scope){
-        this.loading=true;
-        this.$axios.post("/material/upMaterialSubmit/"+scope.row.planNumber).then(v => {
-          this.loading=false;
-          if(v.data.state==200){
-              var index=scope.$index;
-              this.tableDate[index].planApproval='未审批';
-          }else{
-            this.$message({showClose: true, message: '提交审批失败',type: 'warning'});
-          }
-        })
+        this.$confirm('是否提交该审批？')
+          .then(_ => {
+            this.loading=true;
+            this.$axios.post("/material/upMaterialSubmit/"+scope.row.planNumber).then(v => {
+              this.loading=false;
+              if(v.data.state==200){
+                  var index=scope.$index;
+                  this.tableDate[index].planApproval='未审批';
+              }else{
+                this.$message({showClose: true, message: '提交审批失败',type: 'warning'});
+              }
+            })
+          })
+          .catch(_ => {});
       },
       //同意审批
       sure(scope){
-        this.loading=true;
-        this.$axios.post("/material/upMaterialSure/"+scope.row.planNumber).then(v => {
-          this.loading=false;
-          if(v.data.state==200){
-              var index=scope.$index;
-              this.tableDate[index].planApproval='审批通过';
-          }else{
-            this.$message({showClose: true, message: '提交审批失败',type: 'warning'});
-          }
-        })
+        this.$confirm('是否同意该审批？')
+          .then(_ => {
+            this.loading=true;
+            this.$axios.post("/material/upMaterialSure/"+scope.row.planNumber).then(v => {
+              this.loading=false;
+              if(v.data.state==200){
+                  var index=scope.$index;
+                  this.tableDate[index].planApproval='审批通过';
+              }else{
+                this.$message({showClose: true, message: '提交审批失败',type: 'warning'});
+              }
+            })
+          })
+          .catch(_ => {});
       },
       //不同意审批
       nosure(scope){
-        this.loading=true;
-        this.$axios.post("/material/upMaterialnoSure/"+scope.row.planNumber).then(v => {
-          this.loading=false;
-          if(v.data.state==200){
-              var index=scope.$index;
-              this.tableDate[index].planApproval='审批不通过';
-          }else{
-            this.$message({showClose: true, message: '提交审批失败',type: 'warning'});
-          }
-        })
+        this.$confirm('是否不同意该审批？')
+          .then(_ => {
+            this.loading=true;
+            this.$axios.post("/material/upMaterialnoSure/"+scope.row.planNumber).then(v => {
+              this.loading=false;
+              if(v.data.state==200){
+                  var index=scope.$index;
+                  this.tableDate[index].planApproval='审批不通过';
+              }else{
+                this.$message({showClose: true, message: '提交审批失败',type: 'warning'});
+              }
+            })
+          })
+          .catch(_ => {});
       },
       //删除
       deletes(scope){
-        this.loading=true;
-        this.$axios.post("/material/delMaterialno/"+scope.row.planNumber).then(v => {
-          this.loading=false;
-          if(v.data.state==200){
-              var index=scope.$index;
-              this.tableDate.splice(index,1);
-          }else{
-            this.$message({showClose: true, message: '删除合同失败',type: 'warning'});
-          }
-        })
+        this.$confirm('确认删除？')
+          .then(_ => {
+            this.loading=true;
+            this.$axios.post("/material/delMaterialno/"+scope.row.planNumber).then(v => {
+              this.loading=false;
+              if(v.data.state==200){
+                  var index=scope.$index;
+                  this.tableDate.splice(index,1);
+              }else{
+                this.$message({showClose: true, message: '删除合同失败',type: 'warning'});
+              }
+            })
+          })
+          .catch(_ => {});
       },
       handleClick(row) {
         console.log(row);

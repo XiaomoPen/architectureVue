@@ -62,6 +62,14 @@ import card from "../components/lyh/card";
 import addcard from "../components/lyh/addcard";
 import adddeparture from "../components/lyh/adddeparture";
 
+//谭奕豪
+import qjsq from "@/components/tyh/qjsq.vue"
+import login from "@/components/tyh/index.vue"
+import jbsq from "@/components/tyh/jbsq.vue"
+import ccsq from "@/components/tyh/ccsq.vue"
+import wdsq from "@/components/tyh/wdsq.vue"
+import dblc from "@/components/tyh/dblc.vue"
+
 Vue.use(Router)
 const originalPush = Router.prototype.push
 Router.prototype.push = function push(location) {
@@ -172,7 +180,7 @@ const router = new Router({
     }, {
       path: '/cCustomer',
       component: cCustomer,
-      redirect: '/htxx',
+      redirect: '/khxxf',
       children: [{
         path: '/htxx',
         component: htxx
@@ -209,9 +217,24 @@ const router = new Router({
       }]
     }, {
       path: '/cPersonal',
-      components: {
-        default: cPersonal
-      }
+      component: cPersonal,
+      redirect: '/jbsq',
+      children: [{
+        path: '/qjsq',
+        component: qjsq
+      }, {
+        path: '/jbsq',
+        component: jbsq
+      }, {
+        path: '/ccsq',
+        component: ccsq
+      }, {
+        path: '/wdsq',
+        component: wdsq
+      }, {
+        path: '/dblc',
+        component: dblc
+      }],
     }, {
       path: '/cMatters',
       component: cMatters,

@@ -43,9 +43,6 @@
           </el-select>
         </el-form-item><br />
         <el-form-item label="客户等级" label-width="100px" prop="khxxKhdj">
-          <!-- <el-select v-model="khxx.zzjgBm" placeholder="请选择部门" clearable >
-            <el-option v-for="j in bmb" :label="j.bmbName" :value="j.bmbName" :key="j.bmbId"></el-option>
-          </el-select> -->
           <el-select v-model="khxx.khxxKhdj" placeholder="请选择星级">
             <el-option label="1星" value="1星"></el-option>
             <el-option label="2星" value="2星"></el-option>
@@ -61,7 +58,10 @@
           <el-input v-model="khxx.khxxKhdh" style="width: 300px;"></el-input>
         </el-form-item><br />
         <el-form-item label="业务员名称" label-width="100px" prop="userMc">
-          <el-input v-model="khxx.userMc" style="width: 300px;"></el-input>
+          <!-- <el-input v-model="khxx.userMc" style="width: 300px;"></el-input> -->
+		  <el-select v-model="khxx.userMc" placeholder="选择负责人" clearable >
+		    <el-option v-for="j in user" :label="j.userName" :value="j.userNumber" :key="j.userNumber"></el-option>
+		  </el-select>
         </el-form-item>
         <!-- <el-form-item label="业务员编号" label-width="100px" prop="ygjcxxRz">
           <el-date-picker v-model="RsYgjcxx.ygjcxxRz" type="date" format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd"
@@ -104,6 +104,19 @@
           userNumber: '',
           userMc: '',
         },
+        user:[{
+          userNumber:'',
+          userJobNumber:'',
+          userName:'',
+          userSex:'',
+          userBirthday:'',
+          userIntime:'',
+          userPositive:'',
+          userDeparture:'',
+          positionNumber:'',
+          departmentNumber:'',
+          userState:'',
+        }],
         rules: {
           khxxXm: [{
             required: true,
@@ -148,10 +161,11 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-
+            console.log(this.khxx)
             this.$post("/khxx/addKhxx/" + JSON.stringify(this.khxx)).then(v => {
               console.log(v.data.info)
               this.$message.success(v.data.info);
+              this.$refs[formName].resetFields();
             })
 
           } else {
@@ -165,8 +179,16 @@
       resetForm(formName) {
         this.$refs[formName].resetFields();
       },
-
-
+       //查询全部的员工id和姓名，用于选择负责人
+       alluser:function(){
+         this.$get("/khxx/queryUserId").then(v => {
+           console.log(v.data);
+           this.user = v.data.content;
+         });
+       },
+    },
+    created: function() {
+      this.alluser();
     }
 
   }

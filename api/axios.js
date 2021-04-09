@@ -14,7 +14,7 @@ export const get = (ulr, paramsx) => {
 export const post = (ulr, params) => { return axios.post(ulr, qs.stringify(params,{ indices: false })); };
 
 //put传递一个值
-export const update = (ulr, params) => { return axios.put(ulr, qs.stringify(params,{ indices: false })); };
+export const put = (ulr, params) => { return axios.put(ulr, qs.stringify(params,{ indices: false })); };
 
 
 export const del = (ulr, paramsx) => {
